@@ -30,3 +30,15 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task default: :test
+
+# desc 'Before task'
+# task :before do
+#   puts 'Before'
+#   puts ENV['FIXTURES_DIR']
+# end
+
+# Rake::Task['db:fixtures:load'].enhance([:before]) do
+#   # Rake::Task[:after].invoke
+# end
+# include ActiveRecord::Tasks
+# DatabaseTasks.fixtures_path = "#{Rails.root}"

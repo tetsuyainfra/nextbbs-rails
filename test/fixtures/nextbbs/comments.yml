@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
+<% 10.times.each do |i| %>
+one_<%= i %>:
+  name: MyString<%= i %>
   body: MyText
   topic: one
+<% end %>
 
 two:
   name: MyString
