@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_024138) do
+ActiveRecord::Schema.define(version: 2019_11_25_031045) do
+
+  create_table "nextbbs_comments", force: :cascade do |t|
+    t.string "name"
+    t.text "body"
+    t.integer "topic_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["topic_id"], name: "index_nextbbs_comments_on_topic_id"
+  end
 
   create_table "nextbbs_topics", force: :cascade do |t|
     t.string "title"
@@ -18,4 +27,5 @@ ActiveRecord::Schema.define(version: 2019_11_25_024138) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "nextbbs_comments", "topics"
 end
