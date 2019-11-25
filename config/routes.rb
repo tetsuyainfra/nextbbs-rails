@@ -1,10 +1,5 @@
 Nextbbs::Engine.routes.draw do
-  resources :comments
-  # resources :topics
-  # resources :topics, only: [:index, :show, :edit, :new] do
-  #   get 'destroy', on: :member
-  # end
-  resources :topics, except: [:destroy] do
-    get 'destroy', on: :member
+  resources :topics do
+    resources :comments
   end
 end

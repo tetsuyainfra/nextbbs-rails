@@ -3,9 +3,11 @@ class CreateNextbbsComments < ActiveRecord::Migration[6.0]
     create_table :nextbbs_comments do |t|
       t.string :name
       t.text :body
-      t.references :topic, null: false, foreign_key: true
+      t.integer :topic_id, null: false
 
       t.timestamps
     end
+
+    add_foreign_key :nextbbs_comments, :nextbbs_topics, column: :topic_id
   end
 end

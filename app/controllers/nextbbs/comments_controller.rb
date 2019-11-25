@@ -6,6 +6,7 @@ module Nextbbs
 
     # GET /comments
     def index
+      @topic   = Topic.find(params[:topic_id])
       @comments = Comment.all
     end
 
@@ -15,6 +16,7 @@ module Nextbbs
 
     # GET /comments/new
     def new
+      @topic   = Topic.find(params[:topic_id])
       @comment = Comment.new
     end
 
@@ -24,7 +26,10 @@ module Nextbbs
 
     # POST /comments
     def create
-      @comment = Comment.new(comment_params)
+      @topic   = Topic.find(params[:topic_id])
+      # @comment = Comment.new(comment_params)
+      p @topic
+      @comment = @topic.comments.new(comment_params)
 
       if @comment.save
         redirect_to @comment, notice: 'Comment was successfully created.'
@@ -56,6 +61,7 @@ module Nextbbs
 
       # Only allow a trusted parameter "white list" through.
       def comment_params
+
         params.require(:comment).permit(:name, :body, :topic_id)
       end
   end

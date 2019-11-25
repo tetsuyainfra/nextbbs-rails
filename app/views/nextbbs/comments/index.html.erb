@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Comments</h1>
+<h2>トピックタイトル<%= @topic.title %></h2>
 
 <table>
   <thead>
@@ -19,7 +20,7 @@
         <td><%= comment.body %></td>
         <td><%= comment.topic_id %></td>
         <td><%= link_to 'Show', comment %></td>
-        <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
+        <td><%= link_to 'Edit', edit_topic_comment_path(topic, comment) %></td>
         <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -28,4 +29,6 @@
 
 <br>
 
-<%= link_to 'New Comment', new_comment_path %>
+<%= link_to 'New Comment', new_topic_comment_path %>
+<br>
+<%= link_to 'Back Topic index', topics_path %>

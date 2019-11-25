@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2019_11_25_031045) do
     t.integer "topic_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["topic_id"], name: "index_nextbbs_comments_on_topic_id"
   end
 
   create_table "nextbbs_topics", force: :cascade do |t|
@@ -27,5 +26,5 @@ ActiveRecord::Schema.define(version: 2019_11_25_031045) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "nextbbs_comments", "topics"
+  add_foreign_key "nextbbs_comments", "nextbbs_topics", column: "topic_id"
 end
