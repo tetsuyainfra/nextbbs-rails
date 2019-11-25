@@ -1,4 +1,5 @@
 Nextbbs::Engine.routes.draw do
+  resources :comments
   # resources :topics
   # resources :topics, only: [:index, :show, :edit, :new] do
   #   get 'destroy', on: :member
