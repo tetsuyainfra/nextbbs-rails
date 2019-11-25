@@ -7,6 +7,7 @@ module Nextbbs
     # GET /topics
     def index
       @topics = Topic.all
+      @topic = Topic.new
     end
 
     # GET /topics/1
@@ -27,7 +28,8 @@ module Nextbbs
       @topic = Topic.new(topic_params)
 
       if @topic.save
-        redirect_to @topic, notice: 'Topic was successfully created.'
+        # redirect_to @topic, notice: 'Topic was successfully created.'
+        redirect_to topics_url
       else
         render :new
       end
