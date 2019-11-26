@@ -10,7 +10,6 @@ module Nextbbs
     end
 
     test "should data element equal 2" do
-      p Topic.count
       assert_equal 2, Topic.count
     end
 

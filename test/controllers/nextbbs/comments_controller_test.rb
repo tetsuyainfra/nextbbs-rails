@@ -10,10 +10,8 @@ module Nextbbs
     end
 
     test "should get index" do
-      # get comments_url
-      p topic_comments_url(@topic)
       get topic_comments_url(@topic)
-      assert_response :succes
+      assert_response :success
     end
 
     # test "should get new" do
