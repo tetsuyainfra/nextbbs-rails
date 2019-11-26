@@ -23,6 +23,7 @@ module Nextbbs
 
     # GET /topics/1/edit
     def edit
+      @form = Form::Topic.find(params[:id])
     end
 
     # POST /topics
@@ -39,6 +40,7 @@ module Nextbbs
 
     # PATCH/PUT /topics/1
     def update
+      logger.debug topic_params
       if @topic.update(topic_params)
         redirect_to @topic, notice: 'Topic was successfully updated.'
       else

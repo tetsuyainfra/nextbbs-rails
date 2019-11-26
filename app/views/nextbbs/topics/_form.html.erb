@@ -1,4 +1,8 @@
-<%= form_with(model: topic, local: true) do |form| %>
+<% path = path || nil %>
+
+
+<%#= form_with(model: topic, url: path, local: true) do |form| %>
+<%= form_with(model: topic, url: path) do |form| %>
   <% if topic.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(topic.errors.count, "error") %> prohibited this topic from being saved:</h2>
@@ -15,17 +19,6 @@
     <%= form.label :title %>
     <%= form.text_field :title %>
   </div>
-
-  <%= form.fields_for :comments do |field| %>
-    <div class="field">
-      <%= field.label :name %>
-      <%= field.text_field :name %>
-    </div>
-    <div class="field">
-      <%= field.label :body %>
-      <%= field.text_field :body %>
-    </div>
-  <% end %>
 
   <div class="actions">
     <%= form.submit %>

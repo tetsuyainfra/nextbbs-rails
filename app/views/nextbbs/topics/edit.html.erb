@@ -1,6 +1,12 @@
 <h1>Editing Topic</h1>
 
-<%= render 'form', topic: @topic %>
+
+<%= @topic.title %>
+<%= render 'form', topic: @topic, path: topic_path(@topic) %>
+<hr/>
+
+<%= @form.title %>
+<%= render 'form', topic: @form, path: topic_path(@topic) %>
 
 <%= link_to 'Show', @topic %> |
 <%= link_to 'Back', topics_path %>
