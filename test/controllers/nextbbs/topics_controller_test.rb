@@ -25,7 +25,7 @@ module Nextbbs
 
     test "should create topic with comments" do
       assert_difference('Topic.count') do
-        # assert_difference('Comment.count') do
+        assert_difference('Comment.count') do
           post topics_url, params: {
             form_topic: {
                title: "new topic",
@@ -34,7 +34,7 @@ module Nextbbs
                }
             }
           }
-        # end
+        end
       end
 
       assert_redirected_to topics_url
