@@ -5,11 +5,11 @@ module Nextbbs
     include Engine.routes.url_helpers
 
     setup do
-      # byebug
       @topic = nextbbs_topics(:one)
     end
 
     test "should data element equal 2" do
+      # See test/fixtures/nextbbs/topics.yml
       assert_equal 2, Topic.count
     end
 
@@ -23,12 +23,20 @@ module Nextbbs
       assert_response :success
     end
 
-    test "should create topic" do
+    test "should create topic with comments" do
       assert_difference('Topic.count') do
-        post topics_url, params: { topic: { title: @topic.title } }
+        assert_difference('Comment.count') do
+          post topics_url, params: {
+            topic: {
+               title: @topic.title,
+               comments: [
+                 { name: "774", body: "body" }
+               ]
+            }
+          }
+        end
       end
 
-      # assert_redirected_to topic_url(Topic.last)
       assert_redirected_to topics_url
     end
 
@@ -48,12 +56,12 @@ module Nextbbs
     end
 
     # MEMO: TODO
-    # test "should destroy topic" do
-    #   assert_difference('Topic.count', -1) do
-    #     delete topic_url(@topic)
-    #   end
+    test "should destroy topic" do
+      assert_difference('Topic.count', -1) do
+        delete topic_url(@topic)
+      end
 
-    #   assert_redirected_to topics_url
-    # end
+      assert_redirected_to topics_url
+    end
   end
 end
