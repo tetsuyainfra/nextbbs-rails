@@ -16,6 +16,17 @@
     <%= form.text_field :title %>
   </div>
 
+  <%= form.fields_for :comments do |field| %>
+    <div class="field">
+      <%= field.label :name %>
+      <%= field.text_field :name %>
+    </div>
+    <div class="field">
+      <%= field.label :body %>
+      <%= field.text_field :body %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

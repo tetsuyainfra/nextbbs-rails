@@ -6,12 +6,15 @@ module Nextbbs
 
     setup do
       @topic = nextbbs_topics(:one)
+      @comments = @topic.comments
       @comment = nextbbs_comments(:one_1)
     end
 
     test "should get index" do
       get topic_comments_url(@topic)
       assert_response :success
+
+      assert_select 'title',  @topic.title
     end
 
     # test "should get new" do

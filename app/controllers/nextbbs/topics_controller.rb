@@ -12,6 +12,7 @@ module Nextbbs
 
     # GET /topics/1
     def show
+      @comments = @topic.comments
     end
 
     # GET /topics/new

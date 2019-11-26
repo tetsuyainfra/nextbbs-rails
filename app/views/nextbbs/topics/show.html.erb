@@ -4,6 +4,15 @@
   <strong>Title:</strong>
   <%= @topic.title %>
 </p>
+<div>
+  <ul>
+  <% @comments.each do |c| %>
+    <li>
+      <%= c.name %> : <%= c.body %>
+    </li>
+  <% end %>
+  </ul>
+</div>
 
 <%= link_to 'Edit', edit_topic_path(@topic) %> |
 <%= link_to 'Back', topics_path %>
