@@ -13,11 +13,12 @@ module Nextbbs
     # GET /topics/1
     def show
       @comments = @topic.comments
+      @new_comment = Form::Comment.new(topic: @topic)
     end
 
     # GET /topics/new
     def new
-      @topic = Topic.new
+      @form = Form::Topic.new
     end
 
     # GET /topics/1/edit
@@ -59,7 +60,15 @@ module Nextbbs
 
       # Only allow a trusted parameter "white list" through.
       def topic_params
-        params.require(:topic).permit(:title)
+        # params
+        #   .require(:topic_form)
+        #   .permit(:title)
+        params
+          .require(:form_topic)
+          .permit(
+            Form::Topic::REGISTRABLE_ATTRIBUTES +
+            [comments_attributes: Form::Comment::REGISTRABLE_ATTRIBUTES]
+          )
       end
   end
 end
