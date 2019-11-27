@@ -23,6 +23,7 @@ module Nextbbs
               content_type: 'text/plain; charset=Shift_JIS'
     end
 
+    # /dat/[:id].dat
     def dat
       @topic = Topic.find(params[:id])
       @comments = @topic.comments
