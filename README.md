@@ -68,3 +68,5 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## 参考文献
 - [と～く２ちゃんねる - Talk 2ch](http://age.s22.xrea.com/talk2ch/)
 - [専ブラ開発への道 - プログラミングスレまとめ in VIP](http://vipprog.net/wiki/%E5%B0%82%E3%83%96%E3%83%A9%E9%96%8B%E7%99%BA%E3%81%B8%E3%81%AE%E9%81%93.html)
+- [専用ブラウザ開発者様へのお知らせ｜したらば掲示板　開発日誌](http://blog.livedoor.jp/bbsnews/archives/50283526.html)
+- [掲示板情報を取得する為のAPIを公開｜したらば掲示板　開発日誌](http://blog.livedoor.jp/bbsnews/archives/51024405.html)
