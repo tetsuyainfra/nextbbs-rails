@@ -54,4 +54,14 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 - Devise
 - SwagerAPI
-- template レンダリングは遅いかも@DAT,subject.txt
+- BBSの構造化
+  - Board Model
+  - Comment Model 修正
+  - ID機能とか
+  - キャップ機能とか
+  - NG, BAN
+  - Shitaraba互換のコントローラー化
+  - Viewのカスタマイズ機能
+    - ユーザ
+    - アドミン
+
