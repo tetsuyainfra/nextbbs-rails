@@ -7,5 +7,7 @@ Nextbbs::Engine.routes.draw do
   get 'shitaraba/index'
   get 'shitaraba/subject.txt', to: 'shitaraba#subject'
   get 'shitaraba/dat/:id', to: 'shitaraba#dat', default: :dat
+  # post 'test/bbs.cgi', to: 'shitaraba#bbs'
+  match 'test/bbs.cgi', to: 'shitaraba#bbs', via: [:get, :post]
 
 end
