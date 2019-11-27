@@ -26,6 +26,22 @@ Or install it yourself as:
 $ gem install nextbbs
 ```
 
+## Settings
+
+### I18n
+
+Nextbbs sees I18n settings.for example, DAT log structure in Shitaraba like bbs.
+You should change default_locale in config/application.rb
+
+```
+# default (no settings or en)
+Name<>email<>2019/11/25(Mon) 13:50:16<>MyText<>
+                        ~~~
+# config.i18n.default_locale = :ja
+Name<>email<>2019/11/25(月) 13:50:16<>MyText<>
+                        ~~~
+```
+
 ## Contributing
 
 Contribution directions go here.
@@ -38,3 +54,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 - Devise
 - SwagerAPI
+- template レンダリングは遅いかも@DAT,subject.txt

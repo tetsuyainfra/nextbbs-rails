@@ -1,4 +1,0 @@
-<%# shift_jis, LF %>
-<% @topics.each do |t| %>
-<%= t.id %>.dat<><%= t.title.encode('shift_jis') %> (<%= t.comments.count %>)
-<% end %>

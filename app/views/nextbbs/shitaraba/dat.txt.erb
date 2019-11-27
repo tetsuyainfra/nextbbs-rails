@@ -1,6 +1,0 @@
-<%#shift_jis, LF %>
-<%#名前<>E-mail<>日付とIDとBE<>本文<> @topic.title %>
-<%# 名前<>E-mail<>日付とIDとBE<>本文<> %>
-<% @comments.each_with_index do | c, no | %>
-<%= ' ' if no != 0 %><%= c.name %><><%= "email" %><><%= c.created_at %><><%= c.body%><>
-<% end %>
