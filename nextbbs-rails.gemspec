@@ -30,6 +30,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "rails-i18n"
 
+  spec.add_development_dependency "slim"
+
   spec.add_development_dependency "sqlite3"
   # spec.add_development_dependency "pgsql"
 
