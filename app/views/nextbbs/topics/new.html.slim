@@ -1,0 +1,67 @@
+/ #flow
+  span.flow-1
+  span.flow-2
+  span.flow-3
+section.section
+  h1.title= @board.title
+  h2.subtitle トピックの新規作成
+  / = form_with(model: @form, url: board_topics_path(@board)) do |form|
+  = form_with(model: @new_topic, url: board_topics_path) do |form|
+    /! Topic
+    = form.hidden_field :board_id
+    .field.is-grouped
+      p.control.is-expanded
+        = form.text_field  :title, class: "input", placeholder: "タイトル", tabindex: 1
+      p.control
+        = form.submit "送信", class: "button is-success", tabindex: 5
+    /! Comment
+    = form.fields_for :comments do |comment_form|
+      .field.is-grouped
+        p.control.is-expanded
+          = comment_form.text_field  :name, class: "input", placeholder: "名前(省略OK)", tabindex: 2
+        p.control.is-expanded
+          = comment_form.text_field :email, class: "input", placeholder: "メール(省略OK)", tabindex: 3
+      .field
+        p.control
+          = comment_form.text_area :body, class: "textarea", placeholder: "本文", tabindex: 4
+
+/ = form_with(model: @form, url: board_topics_path(@board)) do |form|
+  - if @form.errors.any?
+    #error_explanation
+      h2
+        = pluralize(topic.errors.count, "error")
+        |  prohibited this topic from being saved:
+      ul
+        - @form.errors.full_messages.each do |message|
+          li
+            = message
+  .field
+    = form.label :title
+    = form.text_field :title
+  = form.fields_for :comments do |comment|
+    - #= render 'comment_fields', f: comment
+    .field
+      = comment.label :name
+      = comment.text_field :name
+    .field
+      = comment.label :body
+      = comment.text_field :body
+  .actions
+    = form.submit
+/ = link_to 'Back', newtopics_path
+
+  / = form_with(model: @new_comment, url: comments_path) do |form|
+  /   .field.is-grouped
+  /     p.control
+  /       = form.submit "送信", class: "button is-success"
+  /     p.control.is-expanded
+  /       = form.text_field  :name, class: "input", placeholder: "名前"
+  /     p.control.is-expanded
+  /       = form.text_field :email, class: "input", placeholder: "メール"
+  /   .field
+  /     p.control
+  /       = form.text_area :body, class: "textarea", placeholder: "本文"
+  /       = form.hidden_field :topic_id
+  /   .field
+  /     p.help.is-danger
+  /       | ※書き込む際の注意事項はこちら

@@ -52,21 +52,19 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## TODO
 
-- Devise
-- SwagerAPI
-- BBSの構造化
-  - Board Model
-  - Comment Model 修正
-  - ID機能とか
-  - キャップ機能とか
-  - NG, BAN
-  - Shitaraba互換のコントローラー化
-  - Viewのカスタマイズ機能
-    - ユーザ
-    - アドミン
+## 参考
+
+- RailsAdmin
 
 ## 参考文献
+
 - [と～く２ちゃんねる - Talk 2ch](http://age.s22.xrea.com/talk2ch/)
 - [専ブラ開発への道 - プログラミングスレまとめ in VIP](http://vipprog.net/wiki/%E5%B0%82%E3%83%96%E3%83%A9%E9%96%8B%E7%99%BA%E3%81%B8%E3%81%AE%E9%81%93.html)
 - [専用ブラウザ開発者様へのお知らせ｜したらば掲示板　開発日誌](http://blog.livedoor.jp/bbsnews/archives/50283526.html)
-- [掲示板情報を取得する為のAPIを公開｜したらば掲示板　開発日誌](http://blog.livedoor.jp/bbsnews/archives/51024405.html)
+- [掲示板情報を取得する為の API を公開｜したらば掲示板　開発日誌](http://blog.livedoor.jp/bbsnews/archives/51024405.html)
+- [Monazilla/develop/shitaraba - ５ちゃんねる wiki](https://info.5ch.net/index.php/Monazilla/develop/shitaraba)
+- [SETTING.TXT - ５ちゃんねる wiki](https://info.5ch.net/index.php/SETTING.TXT)
+- [Patterns for Successful Rails Engines - Ruby on Rails - Medium](https://medium.com/ruby-on-rails/patterns-for-successful-rails-engines-a7dae3db6921)
+  - "".constantize で文字列からコントローラー(クラス）を指定できるぞ
+- [accepts_nested_attributes_for を使わず、複数の子レコードを保存する
+  ](https://moneyforward.com/engineers_blog/2018/12/15/formobject/)

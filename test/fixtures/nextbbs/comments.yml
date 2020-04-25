@@ -1,13 +1,127 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: nextbbs_comments
+#
+#  id         :bigint           not null, primary key
+#  body       :text
+#  email      :string
+#  hashid     :string
+#  hostname   :string
+#  ip         :inet             not null
+#  name       :string
+#  status     :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  owner_id   :bigint
+#  topic_id   :bigint
+#
+# Indexes
+#
+#  index_nextbbs_comments_on_topic_id  (topic_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (topic_id => nextbbs_topics.id)
+#
 
-<% 10.times.each do |i| %>
-one_<%= i %>:
-  name: MyString<%= i %>
-  body: MyText
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+<% random = Random.new(42) %>
+<% Faker::Config.random = random %>
+
+one:
   topic: one
+  name: MyString2
+  body: MyText
+  status: <%= Nextbbs::Comment.statuses[:published] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." +
+                   Faker::Internet.domain_name(subdomain: true) %>
+  owner: one
+
+<% now = Time.zone.now %>
+<% 10.times.each do |i| %>
+two_<%= i %>:
+  topic: two
+  name: MyName <%= i %>
+  body: MyText <%= i %>
+  status: <%= Nextbbs::Comment.statuses[:published] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." +
+                   Faker::Internet.domain_name(subdomain: true) %>
+  created_at: <%= (now + (1.seconds)*0.5*i).iso8601(6) %>
 <% end %>
 
-two:
-  name: MyString
+three_1:
+  topic: three
+  name: MyString2-2
+  status: <%= Nextbbs::Comment.statuses[:published] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." +
+                   Faker::Internet.domain_name(subdomain: true) %>
+  body: |
+    ( ﾟ∀ﾟ)つ●ｳﾝｺｸｳｶ?　⊂(ﾟ∀ﾟ )ｾﾝｷｭｩｰ♪
+    ≡≡≡≡≡⊂｀⌒m9^Д^)⊃ﾌﾟｷﾞｬｰ!!
+    (　ﾟ∀ﾟ)o彡°おっぱい！おっぱい！
+  owner: one
+
+three_2:
+  topic: three
+  name: MyString2-3
+  status: <%= Nextbbs::Comment.statuses[:published] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." +
+                   Faker::Internet.domain_name(subdomain: true) %>
+  body: |
+    　　　　　　∧＿∧　 　 　　∧＿∧
+    　　　　　_（　´∀｀）　　　　（´∀｀　）
+    　 三(⌒), 　　　ノ⊃　　　 （　>>1　） 　 糞スレは・・
+    　　　 ￣/　/)　 ）　　　　　 |　|　　|
+    　　　 . 〈＿）＼_）　 　　　 （__（_＿_）
+    　
+    　　　　　　　　　∧＿∧　　.∧＿∧
+    　　　　　　　　 （　　´∀）　（´∀｀　）
+    　　　　　 　≡≡三 三ニ⌒)　>>1　） 　　 立てんなって・・
+    　　　　　　　　/　 /)　 ）￣　|　|　　|
+    　　　　　 　　〈＿_）＿_）　 .（__（_＿_）
+    　
+    　　　　　　　　 　 ∧＿∧　　 ∧＿∧
+    　　　　　　　　　 （　´∀｀）　 （´∀｀； ）
+    　　　　　　　　　 （　　　　）　 （　>>1　） 　　・・と思ったけど良スレじゃん
+    　　　　　　　　　　|　　|　|　　　|　|　　|
+    　　　　　　　　　 （＿__）__）　 （__（_＿_）
+
+three_3:
+  topic: three
+  name: MyString2
   body: MyText
-  topic: two
+  status: <%= Nextbbs::Comment.statuses[:unpublished] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." +
+                   Faker::Internet.domain_name(subdomain: true) %>
+three_4:
+  topic: three
+  name: MyString2
+  body: MyText
+  status: <%= Nextbbs::Comment.statuses[:pending] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." +
+                   Faker::Internet.domain_name(subdomain: true) %>
+three_5:
+  topic: three
+  name: MyString2
+  body: MyText
+  status: <%= Nextbbs::Comment.statuses[:deleted] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." +
+                   Faker::Internet.domain_name(subdomain: true) %>
+
+# <% 10.times.each do |ti| %>
+#   <% 1000.times.each do |ci| %>
+# <% name_seeds = [nil, proc{Faker::Name.name}, proc{Faker::Name.first_name}, proc{Faker::JapaneseMedia::DragonBall.character}] %>
+# comment_<%=ti%>_<%=ci%>:
+#   topic: topic_<%= ti %>
+#   name: <%= name_seeds[random.rand(0...name_seeds.length)].try(:call) %>
+#   body: <%= Faker::Lorem.paragraphs(number: random.rand(1..5)).join("\n").inspect %>
+#   status: 1
+#   <% end %>
+# <% end %>

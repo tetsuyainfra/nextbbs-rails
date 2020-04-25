@@ -1,7 +1,44 @@
+# == Schema Information
+#
+# Table name: nextbbs_topics
+#
+#  id             :bigint           not null, primary key
+#  comments_count :integer          default(0), not null
+#  status         :integer          not null
+#  title          :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  board_id       :bigint
+#
+# Indexes
+#
+#  index_nextbbs_topics_on_board_id  (board_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (board_id => nextbbs_boards.id)
+#
+
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: TopicOne
+  board: one
+  title: "トピックサンプル１"
+  status: <%= Nextbbs::Topic.statuses[:published] %>
 
 two:
-  title: TopicTwo
+  board: two
+  title: "トピックサンプル2"
+  status: <%= Nextbbs::Topic.statuses[:published] %>
+
+three:
+  board: three
+  title: "トピックサンプル2"
+  status: <%= Nextbbs::Topic.statuses[:unpublished] %>
+
+# <% seeds = [proc {Faker::Lorem.sentence}, proc {Faker::Lorem.question}] %>
+# <% 2.times.each do |i| %>
+# topic_<%= i %>:
+#   board: three
+#   title: <%= seeds.sample(1).first.call() %>
+# <% end %>

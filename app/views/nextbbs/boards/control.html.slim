@@ -1,0 +1,51 @@
+- provide(:full_title, "コントロール画面 #{@board.title}")
+
+section.hero.is-danger
+  .hero-body
+    / .container.is-fluid
+    .container
+      h1.title= @board.title
+      h2.subtitle コントロール画面
+      / p
+        span.is-pulled-right
+          = link_to "新規スレッドの作成", new_board_topic_path(@board), class: "button is-primary is-medium"
+      nav.level
+        .level-left
+          .level-item.has-text-centered
+            div
+              p.heading  合計トピック
+              p.title=   @topics.count
+          .level-item.has-text-centered
+            div
+              p.heading  合計レス
+              / TODO: countをさせる方法考える(とりあえずsum(topic.comments.count)でいい？)
+              p.title   XXXX
+        .level-right
+          .level-item
+            = link_to "新規スレッドの作成", new_board_topic_path(@board), class: "button is-primary"
+          .level-item
+            = link_to "通常画面に戻る", board_path(@board), class: "button is-primary"
+/ section.section
+  .container.is-fluid
+    h1.title= @board.title
+    h2.subtitle= @board.description
+.container
+.table-container
+  table.table.is-fullwidth.is-hoverable
+    thead :tr
+      th
+      th タイトル
+      th レス
+      / th 勢い
+      th 最終更新日
+      th 作成日
+    tbody
+      - @topics.each do |topic|
+        tr id="topic_#{topic.id}"
+          / td= link_to "", board_topic_path(@board, topic, format: "json"), method: :delete, remote: true,  class: "delete"
+          td= link_to "", board_topic_path(@board, topic), method: :delete, remote: true,  class: "delete"
+          td= link_to topic.title, board_topic_path(@board, topic)
+          td= topic.comments_count
+          / td= topic.comments_count / (Time.now - topic.created_at).to_sec
+          td= l( topic.created_at, format: :semilong)
+          td= l( topic.created_at, format: :semilong)

@@ -1,0 +1,62 @@
+- provide(:full_title, "#{@topic.title} | #{@board.title}")
+/ - provide(:full_title, "#{@topic.title}")
+
+section.section.is-small
+  .container.is-fluid
+    p.has-text-centered
+      = link_to "掲示板に戻る", @board
+
+.container.is-fluid
+  .topics
+    h3.title.is-4= @topic.title
+    dl.comments
+      - @comments.each_with_index do | c, i |
+        - no = i + 1
+        dt
+          = "#{no} 名前："
+          = link_to "mailto: #{c.email}" do
+            b= c.name
+          = " #{l(c.created_at, format: :long)}"
+          = " ID:#{c.hashid}"
+        dd= raw(newline2br(c.body))
+
+section.section.is-small
+  .container.is-fluid
+    p.has-text-centered
+      = link_to "掲示板に戻る", @board
+    p.has-text-centered
+      / ALL
+      / 前100
+      / 次100
+      / 最新50
+section.section.is-small
+  .container.is-fluid
+    = form_with(model: @new_comment, url: comments_path) do |form|
+      .field.is-grouped
+        p.control
+          = form.submit "送信", class: "button is-success"
+        p.control.is-expanded
+          = form.text_field  :name, class: "input", placeholder: "名前"
+        p.control.is-expanded
+          = form.text_field :email, class: "input", placeholder: "メール"
+      .field
+        p.control
+          = form.text_area :body, class: "textarea", placeholder: "本文"
+          = form.hidden_field :topic_id
+      .field
+        p.help.is-danger
+          | ※書き込む際の注意事項はこちら
+
+/! Footer
+- content_for(:footer) do
+  sass:
+    footer.footer
+      padding-bottom: 3rem;
+
+  footer.footer
+    .content.has-text-centered
+      p
+        | <strong>Nextbbs-rails</strong> is available on <a href="https://github.com/tetsuyainfra/nextbbs-rails">github</a>.
+        <br/>
+        = link_to "https://bulma.io/" do
+          = image_tag "/assets/nextbbs/made-with-bulma.png", alt: "Made with Bulma", width:"128", height: "24"

@@ -25,16 +25,10 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency "rails", "~> 6.0.1"
+  spec.add_dependency 'railties', '>= 6.0', '< 6.1'
+  spec.add_dependency "counter_culture", "~> 2.0"
+  spec.add_dependency "rails-i18n"
 
-  spec.add_development_dependency "byebug"
-  spec.add_development_dependency "rails-i18n"
-
-  spec.add_development_dependency "slim"
-
-  spec.add_development_dependency "sqlite3"
-  # spec.add_development_dependency "pgsql"
-
-  spec.add_development_dependency "devise"
-  # spec.add_development_dependency "cancancan"
+  spec.add_dependency "sass-rails"
+  spec.add_dependency "slim"
 end

@@ -1,0 +1,62 @@
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+      // Add a click event on each of them
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+
+          // Get the target from the "data-target" attribute
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+
+        });
+      });
+    }
+
+  });
+
+nav.navbar aria-label=("main navigation") role="navigation"
+  .navbar-brand
+    a.navbar-item href=main_app.root_path
+      | Nextbbs
+      / img height="28" src="https://bulma.io/images/bulma-logo.png" width="112" /
+    = link_to "掲示板TOP", root_path, class: "navbar-item"
+    = link_to "掲示板一覧", boards_path, class: "navbar-item"
+    a.navbar-burger.burger aria-expanded="false" aria-label="menu" data-target="navbarBasicExample" role="button"
+      span aria-hidden="true"
+      span aria-hidden="true"
+      span aria-hidden="true"
+  #navbarBasicExample.navbar-menu
+    .navbar-start
+      / a.navbar-item
+      /   | Documentation
+      / .navbar-item.has-dropdown.is-hoverable
+      /   a.navbar-link
+      /     | More
+      /   .navbar-dropdown
+      /     a.navbar-item
+      /       | About
+      /     a.navbar-item
+      /       | Jobs
+      /     a.navbar-item
+      /       | Contact
+      /     hr.navbar-divider/
+      /     a.navbar-item
+      /       | Report an issue
+    .navbar-end
+      .navbar-item
+        .buttons
+            a.button.is-primary disabled=true
+              strong Sign up
+            a.button.is-light disabled=true
+              | Log in

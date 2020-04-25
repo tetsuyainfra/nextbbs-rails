@@ -1,0 +1,15 @@
+- path = path || nil
+= form_with(model: topic, url: path) do |form|
+  - if topic.errors.any?
+    #error_explanation
+      h2
+        = pluralize(topic.errors.count, "error")
+        |  prohibited this topic from being saved:
+      ul
+        - topic.errors.full_messages.each do |message|
+          li = message
+  .field
+    = form.label :title
+    = form.text_field :title
+  .actions
+    = form.submit

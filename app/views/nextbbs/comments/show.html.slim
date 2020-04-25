@@ -1,0 +1,17 @@
+p#notice
+  = notice
+p
+  strong
+    | Name:
+  = @comment.name
+p
+  strong
+    | Body:
+  = @comment.body
+p
+  strong
+    | Topic:
+  = @comment.topic_id
+= link_to 'Edit', edit_comment_path(@comment)
+|  | 
+= link_to 'Back', comments_path

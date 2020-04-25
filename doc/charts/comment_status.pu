@@ -1,0 +1,19 @@
+
+@startuml
+title Comment Model's write_status
+
+[*] --> Show : write comment
+[*] --> Pending: write comment
+Pending --> Show : Permitted by Board Owner
+Show --> Ban
+Show --> Forbit
+Forbit --> Show
+Show --> Delete
+
+Show      : Normal comment.
+Pending   : Waiting for permission.
+Ban    : Admin banned comment.
+Forbit : Board Owner banned comment.
+Delete : User deleted comment by self.
+
+@enduml

@@ -1,0 +1,70 @@
+
+
+
+
+@startuml
+
+title "Nextbbs - ER Diagram"
+
+package Nextbbs <<Frame>> {
+
+class Category {
+  + id [PK]
+  ---
+  # parent_category_id
+  title: string
+}
+
+class Board {
+  + id [PK]
+  ---
+  title: string
+  description: text
+}
+
+
+class Topic {
+  +id [PK]
+  ---
+  # board_id [FK]
+  title: string
+  comments_count: integer
+  created_at: datetime
+  updated_at: datetime
+}
+
+class Comment {
+  +id [PK]
+  ---
+  # topic_id [FK]
+  name: string
+  email: string
+  body: text
+  hashid:   string
+  meta: text
+  status: integer
+  created_at: datetime
+}
+
+
+Category o-down-o{ Board
+Board    o--o{ Topic
+Topic    o--|{ "1..N" Comment
+
+(Category,Board) ... CategoryBoard
+
+}
+
+@enduml
+
+// 関係
+    ------   :1
+    ----||   :1 and only 1
+    ----o|   :0 or 1
+    -----{   :many
+    ----|{   :1 or more
+    ----o{   :0 or many
+
+
+// http://itref.fc2web.com/technology/entity_relationship_diagram.html
+// https://qiita.com/Tachy_Pochy/items/752ef6e3d38e970378f0

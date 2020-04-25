@@ -1,0 +1,64 @@
+- provide(:full_title, @board.title)
+
+/ <div class="container">
+/   <div class="notification">
+/     This container is <strong>centered</strong> on desktop.
+/   </div>
+/ </div>
+
+/ .columns.is-gapless
+.
+  .columns.is-gapless
+    .column.is-2
+      .notification
+        button.delete
+        |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,consectetur adipiscing elit
+    .column.is-10
+      section.hero.is-primary
+        .hero-body
+          .container
+            h1.title ボードタイトル
+            h2.subtitle 掲示板説明
+            / h1.title= @board.title
+            / h2.subtitle= @board.title
+      .table-container
+        table.table.is-fullwidth.is-hoverable
+          thead :tr
+            th タイトル
+            th レス
+            / th 勢い
+            th 最終更新日
+            th 作成日
+          tbody
+            - @topics.each do |topic|
+              tr
+                td= link_to topic.title, topic
+                td= topic.comments_count
+                / td= topic.comments_count / (Time.now - topic.created_at).to_sec
+                td= l( topic.created_at, format: :semilong)
+                td= l( topic.created_at, format: :semilong)
+
+/ p#notice
+  = notice
+/ h1
+  | Topics
+/ table
+  thead
+    tr
+      th
+        | Title
+      th[colspan="3"]
+  tbody
+    - @topics.each do |topic|
+      tr
+        td = topic.title
+        td = link_to 'Show', topic
+        td = link_to 'Edit', edit_topic_path(topic)
+        td = button_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' }
+/ hr
+/ h2
+  | 新規作成
+  = render 'form', topic: @topic
+  br
+  = link_to 'New Topic', new_topic_path

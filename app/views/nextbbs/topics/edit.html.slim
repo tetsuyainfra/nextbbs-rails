@@ -1,0 +1,10 @@
+h1
+  | Editing Topic
+= @topic.title
+= render 'form', topic: @topic, path: board_topic_path(@board, @topic)
+hr
+= @form.title
+= render 'form', topic: @form, path: board_topic_path(@board, @topic)
+/ = link_to 'Show', board_topic_path(@board, @topic)
+/ |  |
+/ = link_to 'Back', board_topic_path(@board, @topic)

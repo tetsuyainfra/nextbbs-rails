@@ -1,0 +1,23 @@
+/ Navbarをsection.heroの兄妹クラスにするとずれが生じたので回避
+- content_for(:navbar) do
+  /!dummy
+
+
+section.hero.is-fullheight.is-info
+  .hero-head
+    = render partial: "layouts/nextbbs/navbar"
+
+  .hero-body
+    .container
+      .columns.is-vcenterd
+        .column
+          h1.title Nextbbs-rails
+          h2.subtitle BBS as MountableEngine
+        .column.has-text-centered
+          h1.title 使いやすい掲示板を
+          h2.subtitle 導入が簡単な掲示板を
+          p
+            span.buttons.is-centered
+              = link_to "見る", boards_path, class: "button is-medium is-outlined"
+              = link_to "知る", boards_path, class: "button is-medium is-outlined", disabled: true
+  .hero-foot

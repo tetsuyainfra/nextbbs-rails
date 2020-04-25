@@ -1,0 +1,67 @@
+
+
+
+
+@startuml
+
+title "Nextbbs - ER Logic Diagram"
+
+rectangle Nextbbs {
+object "カテゴリ(Category)" as Category {
+  カテゴリ名
+  親カテゴリ
+  カテゴリの順番
+}
+
+object "板(Board)" as Board {
+  カテゴリ名
+  板名
+}
+
+object "スレッド(Topic)" as Topic {
+  タイトル
+  書き込み数
+  更新日時
+}
+
+object "コメント(Comment)" as Comment {
+  名前
+  メール
+  本文
+  書き込みID
+  コメントステータス
+  書き込み日時
+  更新日時
+}
+}
+
+' object BoardOwner
+' object TopicOwner
+' object CommentOwner
+
+' Category "N"--|>"1" Category
+Category --|> Category
+
+Category "1" o-- "N" Board
+Board    "1" o-- "N" Topic
+Topic    "1" o-- "1..N" Comment
+
+' BoardOwner    .. Board   : Option
+' TopicOwner    .. Topic   : Option
+' CommentOwner  .. Comment : Option
+
+
+
+@enduml
+
+// 関係
+    ------   :1
+    ----||   :1 and only 1
+    ----o|   :0 or 1
+    -----{   :many
+    ----|{   :1 or more
+    ----o{   :0 or many
+
+
+// http://itref.fc2web.com/technology/entity_relationship_diagram.html
+// https://qiita.com/Tachy_Pochy/items/752ef6e3d38e970378f0

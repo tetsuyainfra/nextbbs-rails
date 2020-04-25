@@ -1,0 +1,63 @@
+# == Schema Information
+#
+# Table name: nextbbs_boards
+#
+#  id             :bigint           not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text
+#  hash_token     :string
+#  name           :string
+#  status         :integer          not null
+#  title          :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  owner_id       :bigint           not null
+#
+# Foreign Keys
+#
+#  fk_rails_...  (owner_id => users.id)
+#
+
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: one_
+  title: OneBoard
+  description: This is OneBoard
+  status: <%= Nextbbs::Board.statuses[:published] %>
+  hash_token: abcdefg
+  owner: one
+
+two:
+  name: two_
+  title: TwoBoard(日本語テスト)
+  description: |
+    This is TwoBoard
+    日本語のテストを含みます
+  status: <%= Nextbbs::Board.statuses[:published] %>
+  hash_token: abcdefg
+  owner: two
+
+three:
+  name: three
+  title: DummiesBoard
+  description: |
+    This is TwoBoard (Include a lot of Dummies)
+  status: <%= Nextbbs::Board.statuses[:published] %>
+  owner: one
+
+four:
+  name: four
+  title: DeletedBoard
+  description: |
+    This is DeletedBoard
+  status: <%= Nextbbs::Board.statuses[:deleted] %>
+  owner: one
+
+five:
+  name: five
+  title: UnpublishedBoard
+  description: |
+    This is UnpublishedBoard
+  status: <%= Nextbbs::Board.statuses[:unpublished] %>
+  owner: one

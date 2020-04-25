@@ -12,4 +12,51 @@ gemspec
 # your gem to rubygems.org.
 
 # To use a debugger
-gem 'byebug', group: [:development, :test]
+# gem 'byebug', group: [:development, :test]
+
+gem "rails", "~> 6.0.0"
+gem "jquery-rails"
+
+group :development, :test do
+  gem "sqlite3"
+  gem "pg"
+end
+
+group :development, :test do
+  gem "devise", "~> 4.7"
+  gem "devise-i18n"
+end
+
+group :development, :test do
+  gem "pundit"
+end
+
+group :development, :test do
+  gem 'draper', '~> 3.1'
+  gem "html2slim", require: false
+end
+
+group :development, :test do
+  gem 'pry' # Easily debug from your console with `binding.pry`
+  gem 'pry-byebug', platform: :mri # Step-by-step debugging
+
+  gem "byebug"
+
+  gem "faker"
+  gem "annotate"
+end
+
+group :development do
+  gem "web-console"
+  gem "better_errors"
+  gem "binding_of_caller"
+end
+
+# 環境が整うまでdisable
+#group :test do
+#  # Adds support for Capybara system testing and selenium driver
+#  gem 'capybara', '>= 2.15'
+#  gem 'selenium-webdriver'
+#  # Easy installation and use of web drivers to run system tests with browsers
+#  gem 'webdrivers'
+#end
