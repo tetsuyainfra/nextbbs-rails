@@ -51,6 +51,22 @@ Contribution directions go here.
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 ## TODO
+- テストを作る
+  - [ ] モデル
+  - [ ] コントローラー
+- レイアウト調整
+  - [ ] モバイル表示時に各掲示板トップのポスト数表示を小さくする
+  - [ ] 2ch風レイアウトの追加
+- [ ] 多言語対応
+  - [ ] 時間表示
+  - [ ] UI
+- [ ] 追加機能
+  - [ ] dummy appにPostコントローラーを作って、掲示板を読み込めるようにする
+  - [ ] 画像投稿機能
+  - [ ] 引用機能
+  - [ ] 過去ログ機能
+  - [ ] 次スレ作成機能
+  - [ ] WebSocket対応
 
 ## 参考
 

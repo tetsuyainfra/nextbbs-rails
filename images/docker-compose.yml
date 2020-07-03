@@ -2,7 +2,7 @@ version: '2'
 
 services:
   postgresql:
-    image: postgres:11
+    image: postgres:12
     container_name: postgresql
     ports:
       - 5432:5432
@@ -17,12 +17,13 @@ services:
     user: root
 
   pgadmin4:
-    image: dpage/pgadmin4:4.15
+    image: dpage/pgadmin4:4
     container_name: pgadmin4
     ports:
-      - 80:80
-    # volumes:
-    #   - ./pgadmin:/var/lib/pgadmin/storage
+      - 10080:80
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+      # - ./pgadmin:/var/lib/pgadmin/storage
     environment:
       PGADMIN_DEFAULT_EMAIL: root
       PGADMIN_DEFAULT_PASSWORD: root

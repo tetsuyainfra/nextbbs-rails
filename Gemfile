@@ -32,7 +32,7 @@ group :development, :test do
 end
 
 group :development, :test do
-  gem 'draper', '~> 3.1'
+  gem 'draper'
   gem "html2slim", require: false
 end
 

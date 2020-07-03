@@ -26,7 +26,7 @@
 
 
 default: &default
-  adapter: <%= ENV["NEXTBBS_TEST_USERNAME"] || "postgresql" %>
+  adapter: <%= ENV["NEXTBBS_TEST_ADAPTER"] || "postgresql" %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: <%= ENV["NEXTBBS_TEST_USERNAME"] || "root" %>
   password: <%= ENV["NEXTBBS_TEST_PASSWORD"] || "root" %>
