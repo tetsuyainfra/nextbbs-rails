@@ -13,12 +13,13 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  owner_id      :bigint
-#  sequential_id :integer
+#  sequential_id :integer          not null
 #  topic_id      :bigint
 #
 # Indexes
 #
-#  index_nextbbs_comments_on_topic_id  (topic_id)
+#  index_nextbbs_comments_on_topic_id                    (topic_id)
+#  index_nextbbs_comments_on_topic_id_and_sequential_id  (topic_id,sequential_id)
 #
 # Foreign Keys
 #

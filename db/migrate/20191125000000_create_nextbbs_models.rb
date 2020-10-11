@@ -25,8 +25,8 @@ class CreateNextbbsModels < ActiveRecord::Migration[6.0]
 
     create_table :nextbbs_comments do |t|
       t.bigint :owner_id, null: true
-      t.integer :sequential_id
       t.references :topic, foreign_key: { to_table: :nextbbs_topics }
+      t.integer :sequential_id, null: false
       t.string :name
       t.string :email
       t.text :body
@@ -38,6 +38,7 @@ class CreateNextbbsModels < ActiveRecord::Migration[6.0]
       t.timestamps
     end
     # add_index :nextbbs_comments, [:topic_id, :created_at]
+    add_index :nextbbs_comments, [:topic_id, :sequential_id]
 
     # # Board must have Owner(User)
     # add_column :nextbbs_boards, :owner_id, :bigint, index: true, null: false
