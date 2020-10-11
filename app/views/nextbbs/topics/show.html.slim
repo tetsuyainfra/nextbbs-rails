@@ -10,24 +10,13 @@ section
   .container.is-fluid
     .topics
       h3.title.is-4= @topic.title
-      dl.comments
-        - @comments.each_with_index do | c, i |
-          - no = i + 1
-          - case c.status
-          - when "published" then
-            dt
-              = "#{no} 名前："
-              = link_to "mailto: #{c.email}" do
-                b= c.name
-              = " #{l(c.created_at, format: :long)}"
-              = " ID:#{c.hashid}"
-            dd= raw(newline2br(c.body))
-          - when "deleted" then
-            dt= "#{no} 名前：delted #{l(c.created_at, format: :long)} ID:#{c.hashid}"
-            dd 削除済み
-          - else
-            dt= "#{no} 名前：other #{l(c.created_at, format: :long)} ID:#{c.hashid}"
-            dd 非表示だよ
+      / div.nextbbs-comments
+        / - @comments.each do | c |
+          / = render partial: "nextbbs/comments/comment", locals: { comment: c}
+      div.nextbbs-comments
+        = render partial: "nextbbs/comments/comment", collection: @comments
+
+
 
 section.section.is-small
   .container.is-fluid

@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2019_12_12_132336) do
   create_table "nextbbs_comments", force: :cascade do |t|
     t.bigint "owner_id"
     t.bigint "topic_id"
+    t.integer "sequential_id", null: false
     t.string "name"
     t.string "email"
     t.text "body"
@@ -39,6 +40,7 @@ ActiveRecord::Schema.define(version: 2019_12_12_132336) do
     t.integer "status", limit: 2, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["topic_id", "sequential_id"], name: "index_nextbbs_comments_on_topic_id_and_sequential_id"
     t.index ["topic_id"], name: "index_nextbbs_comments_on_topic_id"
   end
 

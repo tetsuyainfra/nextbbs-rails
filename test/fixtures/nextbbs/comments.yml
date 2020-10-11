@@ -2,22 +2,24 @@
 #
 # Table name: nextbbs_comments
 #
-#  id         :bigint           not null, primary key
-#  body       :text
-#  email      :string
-#  hashid     :string
-#  hostname   :string
-#  ip         :inet             not null
-#  name       :string
-#  status     :integer          not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  owner_id   :bigint
-#  topic_id   :bigint
+#  id            :bigint           not null, primary key
+#  body          :text
+#  email         :string
+#  hashid        :string
+#  hostname      :string
+#  ip            :inet             not null
+#  name          :string
+#  status        :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  owner_id      :bigint
+#  sequential_id :integer          not null
+#  topic_id      :bigint
 #
 # Indexes
 #
-#  index_nextbbs_comments_on_topic_id  (topic_id)
+#  index_nextbbs_comments_on_topic_id                    (topic_id)
+#  index_nextbbs_comments_on_topic_id_and_sequential_id  (topic_id,sequential_id)
 #
 # Foreign Keys
 #
@@ -30,6 +32,7 @@
 
 one:
   topic: one
+  sequential_id: 1
   name: MyString2
   body: MyText
   status: <%= Nextbbs::Comment.statuses[:published] %>
@@ -43,6 +46,7 @@ one:
 <% N.times.each do |i| %>
 two_<%= i %>:
   topic: two
+  sequential_id: <%= i+1 %>
   name: MyName <%= i %>
   body: MyText <%= i %>
   status: <%= Nextbbs::Comment.statuses[:published] %>
@@ -54,6 +58,7 @@ two_<%= i %>:
 
 three_1:
   topic: three
+  sequential_id: 1
   name: MyString2-2
   status: <%= Nextbbs::Comment.statuses[:published] %>
   ip: <%= Faker::Internet.ip_v4_address %>
@@ -67,6 +72,7 @@ three_1:
 
 three_2:
   topic: three
+  sequential_id: 2
   name: MyString2-3
   status: <%= Nextbbs::Comment.statuses[:published] %>
   ip: <%= Faker::Internet.ip_v4_address %>
@@ -93,6 +99,7 @@ three_2:
 
 three_3:
   topic: three
+  sequential_id: 3
   name: MyString2
   body: MyText
   status: <%= Nextbbs::Comment.statuses[:unpublished] %>
@@ -101,6 +108,7 @@ three_3:
                   Faker::Internet.domain_name(subdomain: true) %>
 three_4:
   topic: three
+  sequential_id: 4
   name: MyString2
   body: MyText
   status: <%= Nextbbs::Comment.statuses[:pending] %>
@@ -109,6 +117,7 @@ three_4:
                   Faker::Internet.domain_name(subdomain: true) %>
 three_5:
   topic: three
+  sequential_id: 5
   name: MyString2
   body: MyText
   status: <%= Nextbbs::Comment.statuses[:deleted] %>
