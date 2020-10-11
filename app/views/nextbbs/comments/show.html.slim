@@ -35,58 +35,16 @@ section
       div.comments
         div.comment data-date="NG" data-no="17" data-userid="ID:/YaP/30W0"
           .meta
-            span.no DUMMY
-            / span.no #{@comment.no}
+            span.no= @comment.no
             - if @comment.name.present?
-              - if @comment.email.present?
-                span.name :b :a(href="mailto:${@comment.email}")= @comment.name
-              - else
-                span.name :b :a= @comment.name
+              span.name :b
+                - if @comment.email.present?
+                    a(href="mailto:${@comment.email}")= @comment.name
+                - else
+                    a= @comment.name
             - else
               span.name :b ななしさん
             span.date= "#{l(@comment.created_at, format: :long)}"
             span.uid= "ID:#{@comment.hashid}"
           .body
             = @comment.body
-
-  / .treeView.tv-36.asetting_4
-  /   .asetting_5
-  /     .meta
-  /       span.number 36
-  /       span.name
-  /         b ニューノーマルの名無しさん
-  /       span.date 2020/10/09(金) 15:19:17.59
-  /       span.uid ID:9oKoUsM30
-  /     .message
-  /       span.escaped
-  /         a.reply_link href="../test/read.cgi/newsplus/1602224131/17" rel=("noopener noreferrer") target="_blank"  &gt;&gt;17
-  /         br/
-  /         | そんな高尚な方が下界に降りてはなりませぬ
-  / .treeView.tv-98.asetting_4
-  /   .asetting_5
-  /     .meta
-  /       span.number 98
-  /       span.name
-  /         b ニューノーマルの名無しさん
-  /       span.date 2020/10/09(金) 15:23:47.34
-  /       span.uid ID:PyeUShzW0
-  /     .message
-  /       span.escaped
-  /         a.reply_link href="../test/read.cgi/newsplus/1602224131/17" rel=("noopener noreferrer") target="_blank"  &gt;&gt;17
-  /         br/
-  /         | 真面目な学者さんですね
-  /         br/
-  /         | そのうち学術会議からお呼びがかかるかも
-  / .treeView.tv-977.asetting_4
-  /   .asetting_5
-  /     .meta
-  /       span.number 977
-  /       span.name
-  /         b ニューノーマルの名無しさん
-  /       span.date 2020/10/09(金) 16:16:08.66
-  /       span.uid ID:f3lyqhSK0
-  /     .message
-  /       span.escaped
-  /         a.reply_link href="../test/read.cgi/newsplus/1602224131/17" rel=("noopener noreferrer") target="_blank"  &gt;&gt;17
-  /         br/
-  /         | 来年のノーベル賞はあなたで間違いない

@@ -3,6 +3,8 @@ module Nextbbs
     belongs_to :topic
     acts_as_sequenced scope: :topic_id
 
+    alias_attribute :no, :sequential_id
+
     counter_culture [:topic, :board]
     counter_culture :topic
 
