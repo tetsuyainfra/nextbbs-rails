@@ -25,6 +25,7 @@ class CreateNextbbsModels < ActiveRecord::Migration[6.0]
 
     create_table :nextbbs_comments do |t|
       t.bigint :owner_id, null: true
+      t.integer :sequential_id
       t.references :topic, foreign_key: { to_table: :nextbbs_topics }
       t.string :name
       t.string :email

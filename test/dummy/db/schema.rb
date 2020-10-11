@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2019_12_12_132336) do
 
   create_table "nextbbs_comments", force: :cascade do |t|
     t.bigint "owner_id"
+    t.integer "sequential_id"
     t.bigint "topic_id"
     t.string "name"
     t.string "email"
