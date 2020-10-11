@@ -33,18 +33,4 @@ section
   .container.is-fluid
     .topics
       div.comments
-        div.comment data-date="NG" data-no="17" data-userid="ID:/YaP/30W0"
-          .meta
-            span.no= @comment.no
-            - if @comment.name.present?
-              span.name :b
-                - if @comment.email.present?
-                    a(href="mailto:${@comment.email}")= @comment.name
-                - else
-                    a= @comment.name
-            - else
-              span.name :b ななしさん
-            span.date= "#{l(@comment.created_at, format: :long)}"
-            span.uid= "ID:#{@comment.hashid}"
-          .body
-            = @comment.body
+        = render partial: "comment", locals: { comment: @comment }
