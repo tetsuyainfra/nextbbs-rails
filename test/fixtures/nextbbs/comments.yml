@@ -125,6 +125,18 @@ three_5:
   hostname: <%= Faker::Internet.username + "." +
                   Faker::Internet.domain_name(subdomain: true) %>
 
+<% 3.times.each do |i| %>
+comment_1_<%= i %>:
+  topic_id: <%= ActiveRecord::FixtureSet.identify("topic_#{i}") %>
+  sequential_id: 1
+  name: Name774
+  body: BodyFirstComment
+  status: <%= Nextbbs::Comment.statuses[:published] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." + Faker::Internet.domain_name(subdomain: true) %>
+<% end %>
+
+
 <% if false %>
 # <% 10.times.each do |ti| %>
 #   <% 1000.times.each do |ci| %>
