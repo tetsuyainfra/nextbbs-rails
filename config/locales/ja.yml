@@ -9,3 +9,10 @@ ja:
       long:      "%Y/%m/%d(%a) %H:%M:%S.%2N"
       semilong:  "%y/%m/%d %H:%M:%S"
       short:     "%m/%d %H:%M:%S"
+  nextbbs:
+    boards:
+      create_success: "掲示板の作成に成功しました。"
+      update_success: "掲示板の設定更新に成功しました。"
+      destroy_success: "掲示板の削除に成功しました。"
+      destroy_failed: "掲示板の削除に失敗しました。管理者に連絡してください。"
+      validate_failed: "他人の掲示板です。"

@@ -6,19 +6,28 @@ section.section.is-small
     p.has-text-centered
       = link_to "掲示板に戻る", @board
 
-.container.is-fluid
-  .topics
-    h3.title.is-4= @topic.title
-    dl.comments
-      - @comments.each_with_index do | c, i |
-        - no = i + 1
-        dt
-          = "#{no} 名前："
-          = link_to "mailto: #{c.email}" do
-            b= c.name
-          = " #{l(c.created_at, format: :long)}"
-          = " ID:#{c.hashid}"
-        dd= raw(newline2br(c.body))
+section
+  .container.is-fluid
+    .topics
+      h3.title.is-4= @topic.title
+      dl.comments
+        - @comments.each_with_index do | c, i |
+          - no = i + 1
+          - case c.status
+          - when "published" then
+            dt
+              = "#{no} 名前："
+              = link_to "mailto: #{c.email}" do
+                b= c.name
+              = " #{l(c.created_at, format: :long)}"
+              = " ID:#{c.hashid}"
+            dd= raw(newline2br(c.body))
+          - when "deleted" then
+            dt= "#{no} 名前：delted #{l(c.created_at, format: :long)} ID:#{c.hashid}"
+            dd 削除済み
+          - else
+            dt= "#{no} 名前：other #{l(c.created_at, format: :long)} ID:#{c.hashid}"
+            dd 非表示だよ
 
 section.section.is-small
   .container.is-fluid
@@ -47,7 +56,7 @@ section.section.is-small
         p.help.is-danger
           | ※書き込む際の注意事項はこちら
 
-/! Footer
+/ footer define
 - content_for(:footer) do
   sass:
     footer.footer

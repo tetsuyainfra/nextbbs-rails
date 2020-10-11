@@ -17,7 +17,7 @@ module Nextbbs
 
     # /boards/:id/SETTING.TXT
     def setting
-      @board  = Board.find(params[:id])
+      @board  = Board.find(params[:board_id])
       body = <<~"EOS"
       BBS_TITLE=#{@board.title}
       EOS
@@ -27,7 +27,7 @@ module Nextbbs
 
     # /boards/:id/subject.txt
     def subject
-      @board  = Board.find(params[:id])
+      @board  = Board.find(params[:board_id])
       @topics = @board.topics
 
       generated_dat = CSV.generate(col_sep: "<>", row_sep: "\n", quote_char: '') do | csv |
@@ -43,8 +43,8 @@ module Nextbbs
 
     # /boards/:id/dat/:topic_id.dat
     def dat
-      puts params
-      @board  = Board.find(params[:id])
+      # puts "params: ", params
+      @board  = Board.find(params[:board_id])
       @topic  = @board.topics.find(params[:topic_id])
       @comments = @topic.comments
 
@@ -67,6 +67,7 @@ module Nextbbs
 
     # /boards/test/read.cgi/:board_id/:topic_id/
     def read_cgi
+      # puts "params: ", params
       @board = Board.find(params[:board_id])
       @topic = @board.topics.find(params[:topic_id])
       @comments = @topic.comments

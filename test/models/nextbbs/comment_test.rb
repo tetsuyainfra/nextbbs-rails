@@ -24,7 +24,7 @@
 #  fk_rails_...  (topic_id => nextbbs_topics.id)
 #
 
-require 'test_helper'
+require "test_helper"
 
 module Nextbbs
   class CommentTest < ActiveSupport::TestCase
@@ -35,18 +35,19 @@ module Nextbbs
         title: "test",
         description: "",
         status: Board.statuses[:published],
-        owner: @user
+        owner: @user,
       )
       @board.save!
       @topic = @board.topics.build(
         title: "test",
-        status: Topic.statuses[:published]
+        status: Topic.statuses[:published],
+        owner: @user,
       )
       @topic.save!
       @comment = @topic.comments.build(
         body: "test",
         ip: "192.168.1.123",
-        status: Comment.statuses[:published]
+        status: Comment.statuses[:published],
       )
       @comment.save!
     end
@@ -95,7 +96,6 @@ module Nextbbs
       assert @comment.valid?
     end
 
-
     test "ipaddressにはIPv4,IPv6が入れられる" do
       @comment.ip = Faker::Internet.ip_v4_address
       assert @comment.valid?
@@ -124,7 +124,7 @@ module Nextbbs
     end
 
     test "statusは指定値以外はエラーを出す" do
-      assert_raises(ArgumentError){
+      assert_raises(ArgumentError) {
         @comment.status = :impossible_value
       }
     end
@@ -140,6 +140,5 @@ module Nextbbs
       @comment.hashid = ""
       assert @comment.save
     end
-
   end
 end

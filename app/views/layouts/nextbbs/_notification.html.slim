@@ -1,0 +1,28 @@
+/ .container.mg-small
+ruby:
+  def convert_class(flash_type)
+    case flash_type
+      when "notice" then
+        "is-primary"
+      when "alert" then
+        "is-danger"
+      else
+        ""
+    end
+  end
+
+.container.mt-4.mb-4
+  #nextbbs_notifications
+    - flash.each do |key, value|
+      .notification(class=convert_class(key))
+        button.delete
+        = value
+
+javascript:
+  $(document).ready(()=>{
+    console.log("ready notification javascript code in app/views/layouts/nextbbs/_notification.html.slim")
+    $('#nextbbs_notifications .notification button.delete').on('click', function (){
+      console.log($(this).parent())
+      $(this).parent().addClass('is-hidden')
+    });
+  });

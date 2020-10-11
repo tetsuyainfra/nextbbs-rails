@@ -1,0 +1,31 @@
+@startuml
+title Comment Model's status
+
+state Normal{
+  Public   : 公開中
+  Unpublic : 未公開
+  Logged   : 過去ログ化
+}
+
+state Abnormal{
+  Ban    : Admin banned board.
+  Delete : User deleted board by self.
+}
+
+[*]      -down-> Public : [U/G]コメントの作成
+Public --> Unpublic : [U]
+Unpublic --> Public : [U]
+Public   --> Logged : [S]
+
+Normal --> Ban : [A]
+Normal --> Delete : [U/O]
+
+legend
+- S : System
+- A : Server Admin
+- O : Owner
+- U : User
+- G : Guest
+end legend
+
+@end

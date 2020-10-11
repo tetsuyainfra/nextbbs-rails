@@ -1,0 +1,17 @@
+- provide(:title, "あなたの掲示板一覧")
+
+= render template: "nextbbs/boards/index"
+.
+  / - if _user_quota_board_with
+  - if true
+    section.hero class="is-light"
+      = link_to new_board_path, class: "hero-body" do
+          span.is-block.container
+            h1.title + 掲示板を追加する
+            / h2.subtitle +
+  - else
+    section.hero class="is-warning"
+      .hero-body
+        span.is-block.container
+          h1.title これ以上掲示板を追加できません
+          h2.subtitle 不要な掲示板を削除してください

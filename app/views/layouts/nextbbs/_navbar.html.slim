@@ -29,30 +29,19 @@ nav.navbar aria-label=("main navigation") role="navigation"
   .navbar-brand
     a.navbar-item href=main_app.root_path
       | Nextbbs
-      / img height="28" src="https://bulma.io/images/bulma-logo.png" width="112" /
-    = link_to "掲示板TOP", root_path, class: "navbar-item"
+    = link_to "トップ", root_path, class: "navbar-item"
     = link_to "掲示板一覧", boards_path, class: "navbar-item"
+    - if
+    = link_to "掲示板の管理", boards_path, class: "navbar-item"
+    - if _current_user
+      = link_to "あなたの掲示板", boards_path, class: "navbar-item"
+      = link_to "コメント履歴", comments_path, class: "navbar-item"
     a.navbar-burger.burger aria-expanded="false" aria-label="menu" data-target="navbarBasicExample" role="button"
       span aria-hidden="true"
       span aria-hidden="true"
       span aria-hidden="true"
   #navbarBasicExample.navbar-menu
     .navbar-start
-      / a.navbar-item
-      /   | Documentation
-      / .navbar-item.has-dropdown.is-hoverable
-      /   a.navbar-link
-      /     | More
-      /   .navbar-dropdown
-      /     a.navbar-item
-      /       | About
-      /     a.navbar-item
-      /       | Jobs
-      /     a.navbar-item
-      /       | Contact
-      /     hr.navbar-divider/
-      /     a.navbar-item
-      /       | Report an issue
     .navbar-end
       .navbar-item
         .buttons

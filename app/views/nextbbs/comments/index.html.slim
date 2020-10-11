@@ -1,36 +1,28 @@
-p#notice
-  = notice
-h1
-  | Comments
-h2
-  | トピックタイトル
-  = @topic.title
-table
-  thead
-    tr
-      th
-        | Name
-      th
-        | Body
-      th
-        | Topic
-      th[colspan="3"]
-  tbody
-    - @comments.each do |comment|
-      tr
-        td
-          = comment.name
-        td
-          = comment.body
-        td
-          = comment.topic_id
-        td
-          = link_to 'Show', topic_comment_path(@topic, comment)
-        td
-          = link_to 'Edit', edit_topic_comment_path(@topic, comment)
-        td
-          = link_to 'Destroy', topic_comment_path(@topic, comment), method: :delete, data: { confirm: 'Are you sure?' }
-br
-= link_to 'New Comment', new_topic_comment_path(@topic)
-br
-= link_to 'Back Topic index', topics_path
+- provide(:title, "あなたのコメント履歴")
+/ section.section.is-small
+/   h1.title= "あなたのコメント履歴"
+
+section.section
+  .container
+    .topics
+      / h3.title.is-4= @topic.title
+      dl.comments
+        - @comments.each do | c |
+          dt
+            p
+              = link_to c.topic.board.title + "掲示板", board_path(c.topic.board)
+              | /
+              = link_to c.topic.title, board_topic_path(c.topic.board, c.topic)
+            p= "状態：#{c.status}"
+            p
+              = "名前："
+              = link_to "mailto: #{c.email}" do
+                b= c.name
+              = " #{l(c.created_at, format: :long)}"
+              = " ID:#{c.hashid}"
+          dd
+            = raw(newline2br(c.body))
+            - if c.status != "deleted"
+              div.is-pulled-right
+                / <a class="delete"></a>
+                =link_to "delete", comment_path(c), class: "delete", method: "delete"

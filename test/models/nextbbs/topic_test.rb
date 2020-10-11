@@ -9,6 +9,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  board_id       :bigint
+#  owner_id       :bigint           not null
 #
 # Indexes
 #
@@ -30,12 +31,13 @@ module Nextbbs
         title: "test",
         description: "",
         status: Board.statuses[:published],
-        owner: @user
+        owner: @user,
       )
       @board.save!
       @topic = @board.topics.build(
         title: "test",
-        status: Topic.statuses[:published]
+        status: Topic.statuses[:published],
+        owner: @user,
       )
       @topic.save!
     end
@@ -106,6 +108,7 @@ module Nextbbs
       param = {
         board_id: @board.id,
         title: "test",
+        owner: @board.owner,
         comments_attributes: [
           {
             body: "body",
@@ -115,7 +118,7 @@ module Nextbbs
       }
       @new_topic = Topic.new param
       @new_topic.status = :published
-      @new_topic.comments.each {|c| c.status = :published}
+      @new_topic.comments.each { |c| c.status = :published }
       assert @new_topic.save
     end
 
@@ -131,10 +134,9 @@ module Nextbbs
     end
 
     test "statusは指定値以外はエラーを出す" do
-      assert_raises(ArgumentError){
+      assert_raises(ArgumentError) {
         @topic.status = :impossible_value
       }
     end
-
   end
 end

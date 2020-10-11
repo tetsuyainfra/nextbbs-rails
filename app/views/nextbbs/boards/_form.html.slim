@@ -1,4 +1,9 @@
-= form_with(model: board, local: true) do |form|
+/ = form_with(model: board, local: true, html: {class: "control"}) do |form|
+- path = path || boards_path
+/ - local = local || false
+/ = form_with(model: @new_topic, url: board_topics_path) do |form|
+/ = form_with(model: board, url: path, remote: false) do |form|
+= form_with(model: board, url: path, data: { remote: false }) do |form|
   - if board.errors.any?
     #error_explanation
       h2
@@ -8,14 +13,39 @@
         - board.errors.full_messages.each do |message|
           li
             = message
-  / .field
-  /   = form.label :title
-  /   = form.text_field :title
-  / .field
-  /   = form.label :description
-  /   = form.text_field :description
   .field
-    = form.label :status
-    = form.text_field :status
-  .actions
-    = form.submit
+    = form.label :name, class: "label"
+    = form.text_field :name, class: "input"
+  .field
+    = form.label :title, class: "label"
+    = form.text_field :title, class: "input"
+  .field
+    = form.label :description, class: "label"
+    = form.text_field :description, class: "input"
+  .field
+    = form.label :hash_token, class: "label"
+    = form.text_field :hash_token, class: "input", disabled: true
+  .field
+    = form.label :status, class: "label"
+    = form.select :status, Nextbbs::Form::Board.allowed_statuses.keys, class: "input"
+  .field.actions
+    = form.submit class: "button is-primary"
+
+/ = form_with(model: board, local: true) do |form|
+/   /! Topic
+/   = form.hidden_field :board_id
+/   .field.is-grouped
+/     p.control.is-expanded
+/       = form.text_field  :title, class: "input", placeholder: "タイトル", tabindex: 1
+/     p.control
+/       = form.submit "送信", class: "button is-success", tabindex: 5
+/   /! Comment
+/   = form.fields_for :comments do |comment_form|
+/     .field.is-grouped
+/       p.control.is-expanded
+/         = comment_form.text_field  :name, class: "input", placeholder: "名前(省略OK)", tabindex: 2
+/       p.control.is-expanded
+/         = comment_form.text_field :email, class: "input", placeholder: "メール(省略OK)", tabindex: 3
+/     .field
+/       p.control
+/         = comment_form.text_area :body, class: "textarea", placeholder: "本文", tabindex: 4

@@ -25,19 +25,28 @@ javascript:
 
   });
 
-nav.navbar aria-label=("main navigation") role="navigation"
+nav.navbar aria-label="main navigation" role="navigation"
   .navbar-brand
-    a.navbar-item href=main_app.root_path
-      | Nextbbs
-      / img height="28" src="https://bulma.io/images/bulma-logo.png" width="112" /
-    = link_to "掲示板TOP", root_path, class: "navbar-item"
-    = link_to "掲示板一覧", boards_path, class: "navbar-item"
+    a.navbar-item href=main_app.root_path Nextbbs
     a.navbar-burger.burger aria-expanded="false" aria-label="menu" data-target="navbarBasicExample" role="button"
       span aria-hidden="true"
       span aria-hidden="true"
       span aria-hidden="true"
+      / img height="28" src="https://bulma.io/images/bulma-logo.png" width="112" /
+  / = link_to "掲示板TOP", root_path, class: "navbar-item"
+  / = link_to "掲示板一覧", boards_path, class: "navbar-item"
+  / - if _current_user
+  /   = link_to "あなたの掲示板", yours_boards_path, class: "navbar-item"
+  /   = link_to "コメント履歴", comments_path, class: "navbar-item is-active"
   #navbarBasicExample.navbar-menu
     .navbar-start
+      = link_to "掲示板TOP", root_path, class: "navbar-item"
+      = link_to "掲示板一覧", boards_path, class: "navbar-item"
+      - if _current_user
+        - is_active = current_page?(yours_boards_path) ? "is-active" : nil
+        = link_to "あなたの掲示板", yours_boards_path, class: "navbar-item #{is_active}"
+        - is_active = current_page?(comments_path) ? "is-active" : nil
+        = link_to "コメント履歴", comments_path, class: "navbar-item"
       / a.navbar-item
       /   | Documentation
       / .navbar-item.has-dropdown.is-hoverable
@@ -55,12 +64,18 @@ nav.navbar aria-label=("main navigation") role="navigation"
       /       | Report an issue
     .navbar-end
       .navbar-item
-        .buttons
+        .field.is-grouped
           - unless _current_user
-            = link_to "Sign up", main_app.new_user_registration_path,
-              class: "button is-primary"
-            = link_to "Sign in", main_app.new_user_session_path,
-              class: "button is-light"
+            p.control
+              = link_to main_app.new_user_registration_path, class: "button is-primary" do
+                span Sign Up
+            p.control
+              = link_to main_app.new_user_session_path, class: "button is-light" do
+                span Sign In
           - else
-            = link_to "Log out", main_app.destroy_user_session_path,
-              class: "button is-light", method: :delete
+            p.control
+              a.button.is-text.is-static
+                span= _current_user.email
+            p.control
+              = link_to main_app.destroy_user_session_path, class: "button is-light", method: :delete do
+                span Log out

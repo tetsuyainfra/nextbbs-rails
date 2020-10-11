@@ -1,4 +1,5 @@
-h1
-  | New Board
-= render 'form', board: @board
-= link_to 'Back', boards_path
+div.container
+  h1.title 新規掲示板の登録
+  = render 'form', board: @board
+  hr/
+  = link_to 'Back', yours_boards_path

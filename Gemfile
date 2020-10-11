@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Declare your gem's dependencies in nextbbs.gemspec.
@@ -32,13 +32,14 @@ group :development, :test do
 end
 
 group :development, :test do
-  gem 'draper'
+  gem "draper"
   gem "html2slim", require: false
 end
 
 group :development, :test do
-  gem 'pry' # Easily debug from your console with `binding.pry`
-  gem 'pry-byebug', platform: :mri # Step-by-step debugging
+  gem "pry-rails" # Easily debug from your console with `binding.pry`
+  gem "pry-byebug", platform: :mri # Step-by-step debugging
+  gem "pry-doc"
 
   gem "byebug"
 
@@ -50,6 +51,21 @@ group :development do
   gem "web-console"
   gem "better_errors"
   gem "binding_of_caller"
+end
+
+# VSCodeでデバッグ
+group :development, :test do
+  gem "ruby-debug-ide"
+  gem "debase"
+  gem "rufo"
+end
+
+group :development do
+  # to download bulma.css
+  gem "rubyzip"
+
+  # create i18n support
+  gem "i18n-tasks", "~> 0.9.31"
 end
 
 # 環境が整うまでdisable

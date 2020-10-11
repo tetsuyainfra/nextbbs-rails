@@ -4,14 +4,40 @@ module Nextbbs
   class CommentsController < ApplicationController
     before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
+    before_action :_authenticate_with, only: [:index, :edit]
+
     # GET /comments
     def index
-      @topic = Topic.find(params[:topic_id])
-      @comments = Comment.all
+      # @topic = Topic.find(params[:topic_id])
+      # @comments = Comment.where(owner: @user)
+      # @comments = Comment.where(owner: @user).eager_load(:topic)
+      @comments = Comment.where(owner: @user).eager_load(:topic => :board)
     end
 
     # GET /comments/1
     def show
+      if _current_user == @comment.owner || _current_user == @board.owner
+        respond_to do |format|
+          format.html { render }
+          format.json { render }
+        end
+        return
+      end
+
+      respond_to do |format|
+        case @board.status.to_sym
+        when :deleted
+          format.html { head :not_found }
+          format.json { head :not_found } # これでいいかな？
+        when :unpublished
+          # return 403
+          format.html { head :not_found }
+          format.json { head :not_found } # これでいいかな？
+        when :published
+          format.html { render }
+          format.json { render }
+        end
+      end
     end
 
     # GET /comments/1/edit
@@ -58,8 +84,17 @@ module Nextbbs
 
     # DELETE /comments/1
     def destroy
-      @comment.destroy
-      redirect_to comments_url, notice: "Comment was successfully destroyed."
+      # @comment.destroy
+      case @comment.status
+      when "published"
+        @comment.status = :deleted
+      end
+
+      if @comment.save
+        redirect_to comments_url, notice: "Comment was successfully destroyed."
+      else
+        redirect_to comments_url, notice: "Comment had be destroyed already."
+      end
     end
 
     private
@@ -67,6 +102,8 @@ module Nextbbs
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
+      @topic = @comment.topic
+      @board = @topic.board
     end
 
     # Only allow a trusted parameter "white list" through.

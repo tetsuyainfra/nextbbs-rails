@@ -22,7 +22,7 @@ section.hero.is-danger
               p.title   XXXX
         .level-right
           .level-item
-            = link_to "新規スレッドの作成", new_board_topic_path(@board), class: "button is-primary"
+            = link_to "掲示板の詳細設定", edit_board_path(@board), class: "button is-primary"
           .level-item
             = link_to "通常画面に戻る", board_path(@board), class: "button is-primary"
 / section.section
@@ -43,7 +43,8 @@ section.hero.is-danger
       - @topics.each do |topic|
         tr id="topic_#{topic.id}"
           / td= link_to "", board_topic_path(@board, topic, format: "json"), method: :delete, remote: true,  class: "delete"
-          td= link_to "", board_topic_path(@board, topic), method: :delete, remote: true,  class: "delete"
+          / td= link_to "", board_topic_path(@board, topic), method: :delete, remote: true,  class: "delete"
+          td= link_to "", board_topic_path(@board, topic), method: :delete, class: "delete"
           td= link_to topic.title, board_topic_path(@board, topic)
           td= topic.comments_count
           / td= topic.comments_count / (Time.now - topic.created_at).to_sec

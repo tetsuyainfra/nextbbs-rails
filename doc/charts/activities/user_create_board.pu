@@ -1,0 +1,17 @@
+
+
+@startuml
+title ユーザの掲示板作成方法
+
+state "NextbbsTOP" as TOP
+state "ユーザ登録" as Register
+state Login
+
+[*] -> TOP
+TOP -> Register
+Register -> Login
+Login -> CreateBoard
+
+CreateBoard -> [*]
+
+@enduml

@@ -73,3 +73,6 @@ Board ||-r-|{ Role
 Role }o-r-|| User
 Board |o-r-|| User
 ```
+
+案 3
+エンジン利用者に丸投げ

@@ -14,25 +14,35 @@ object "カテゴリ(Category)" as Category {
 }
 
 object "板(Board)" as Board {
+  所有者
   カテゴリ名
   板名
 }
 
 object "スレッド(Topic)" as Topic {
+  所有者
   タイトル
   書き込み数
   更新日時
 }
 
 object "コメント(Comment)" as Comment {
+  所有者
   名前
   メール
   本文
   書き込みID
+  IPアドレス(v4, v6)
   コメントステータス
   書き込み日時
   更新日時
 }
+
+object "コメント履歴(CommentLog)" as CommentLog {
+  コメント(Comment)とカラムは同じ
+  履歴番号
+}
+
 }
 
 ' object BoardOwner
@@ -45,6 +55,8 @@ Category --|> Category
 Category "1" o-- "N" Board
 Board    "1" o-- "N" Topic
 Topic    "1" o-- "1..N" Comment
+' Comment    "1" o-right- "1..N" CommentLog
+Comment     o--right-- CommentLog
 
 ' BoardOwner    .. Board   : Option
 ' TopicOwner    .. Topic   : Option

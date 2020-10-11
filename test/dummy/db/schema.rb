@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_18_062615) do
+ActiveRecord::Schema.define(version: 2019_12_12_132336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "nextbbs_boards", force: :cascade do |t|
+    t.bigint "owner_id", null: false
     t.string "name"
     t.string "title"
     t.text "description"
@@ -24,10 +25,10 @@ ActiveRecord::Schema.define(version: 2019_12_18_062615) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "comments_count", default: 0, null: false
-    t.bigint "owner_id", null: false
   end
 
   create_table "nextbbs_comments", force: :cascade do |t|
+    t.bigint "owner_id"
     t.bigint "topic_id"
     t.string "name"
     t.string "email"
@@ -38,11 +39,11 @@ ActiveRecord::Schema.define(version: 2019_12_18_062615) do
     t.integer "status", limit: 2, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "owner_id"
     t.index ["topic_id"], name: "index_nextbbs_comments_on_topic_id"
   end
 
   create_table "nextbbs_topics", force: :cascade do |t|
+    t.bigint "owner_id", null: false
     t.bigint "board_id"
     t.string "title"
     t.integer "status", limit: 2, null: false
@@ -64,7 +65,6 @@ ActiveRecord::Schema.define(version: 2019_12_18_062615) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "nextbbs_boards", "users", column: "owner_id"
   add_foreign_key "nextbbs_comments", "nextbbs_topics", column: "topic_id"
   add_foreign_key "nextbbs_topics", "nextbbs_boards", column: "board_id"
 end

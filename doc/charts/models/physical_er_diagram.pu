@@ -18,6 +18,7 @@ class Category {
 class Board {
   + id [PK]
   ---
+  owner_id: bigint [FK]
   title: string
   description: text
 }
@@ -27,6 +28,7 @@ class Topic {
   +id [PK]
   ---
   # board_id [FK]
+  owner_id: bigint [FK]
   title: string
   comments_count: integer
   created_at: datetime
@@ -37,23 +39,56 @@ class Comment {
   +id [PK]
   ---
   # topic_id [FK]
+  owner_id: bigint [FK]
   name: string
   email: string
   body: text
   hashid:   string
+  ip_address: ip
   meta: text
   status: integer
   created_at: datetime
+  ---
+  has_many comment_logs
+  change_and_log!()
+}
+
+class CommentLog {
+  +id [PK]
+  ---
+  comment_id: bigint [FK]
+  revision: integer
+  ---
+  name: string
+  email: string
+  body: text
+  hashid:   string
+  ip_address: ip
+  meta: text
+  status: integer
+  created_at: datetime
+  ---
+  belongs_to comment
 }
 
 
 Category o-down-o{ Board
 Board    o--o{ Topic
 Topic    o--|{ "1..N" Comment
+Comment    o-right-|{ "1..N" CommentLog
 
 (Category,Board) ... CategoryBoard
 
 }
+
+' package UsersApp <<Frame>> {
+'   class User {
+'     +id [PK]
+'   }
+'   User o--o{ Board
+'   User o--o{ Topic
+'   User o--|{ "1..N" Comment
+' }
 
 @enduml
 

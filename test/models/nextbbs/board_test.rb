@@ -13,10 +13,6 @@
 #  updated_at     :datetime         not null
 #  owner_id       :bigint           not null
 #
-# Foreign Keys
-#
-#  fk_rails_...  (owner_id => users.id)
-#
 
 require "test_helper"
 
@@ -25,7 +21,7 @@ module Nextbbs
     def setup
       @user = ::User.new(
         email: "example@example.com",
-        password: "password"
+        password: "password",
       )
       @user.save!
       @board = Board.new(
@@ -169,7 +165,7 @@ module Nextbbs
     end
 
     test "statusは指定値以外はエラーを出す" do
-      assert_raises(ArgumentError){
+      assert_raises(ArgumentError) {
         @board.status = :impossible_value
       }
     end
@@ -178,5 +174,20 @@ module Nextbbs
       assert_not_empty @board.hash_token
     end
 
+    test "掲示板作成数を制限できる" do
+      Rails.logger.debug "MAX_BOARDS_COUNT #{Nextbbs.config.max_boards_count}"
+      assert @user.nextbbs_boards.count < Nextbbs.config.max_boards_count, "テスト実施条件に満たない(=制限できていない)"
+      (@user.nextbbs_boards.count...Nextbbs.config.max_boards_count).each { |i|
+        new_board = @board.dup
+        new_board.name = @board.name + "#{i}"
+        assert new_board.save
+      }
+      assert @user.nextbbs_boards.count == Nextbbs.config.max_boards_count
+
+      # テスト本番
+      will_fail_board = @board.dup
+      will_fail_board.name = "will_fail_board"
+      assert_not will_fail_board.save
+    end
   end
 end

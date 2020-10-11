@@ -1,25 +1,6 @@
-# == Schema Information
-#
-# Table name: nextbbs_boards
-#
-#  id             :bigint           not null, primary key
-#  comments_count :integer          default(0), not null
-#  description    :text
-#  hash_token     :string
-#  name           :string
-#  status         :integer          not null
-#  title          :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  owner_id       :bigint           not null
-#
-# Foreign Keys
-#
-#  fk_rails_...  (owner_id => users.id)
-#
-
 module Nextbbs
   class Board < ApplicationRecord
+    MAX_BOARDS_COUNT = 5
     has_many :topics, dependent: :destroy
 
     enum status: {
@@ -40,5 +21,31 @@ module Nextbbs
               length: { in: 4..32 }
     validates :title, format: { with: /\A[^\r\n]+\z/ }, length: { in: 1..63 }
     validates :description, length: { in: 0..1023 }
+
+    validate :boards_count_must_be_within_limit, on: :create
+
+    def boards_count_must_be_within_limit
+      unless owner.nextbbs_boards.count < Nextbbs.config.max_boards_count
+        errors.add(:base, "boards count limit: #{Nextbbs.config.max_boards_count}")
+      end
+    end
+
+    scope :published, -> { where(status: "published") }
   end
 end
+
+# == Schema Information
+#
+# Table name: nextbbs_boards
+#
+#  id             :bigint           not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text
+#  hash_token     :string
+#  name           :string
+#  status         :integer          not null
+#  title          :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  owner_id       :bigint           not null
+#

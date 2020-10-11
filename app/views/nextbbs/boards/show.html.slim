@@ -25,27 +25,24 @@ section.hero.is-primary
             = link_to "新規スレッドの作成", new_board_topic_path(@board), class: "button is-primary"
           .level-item
             = link_to "⚙", control_board_path(@board), class: "button is-primary"
-/ section.section
-  .container.is-fluid
-    h1.title= @board.title
-    h2.subtitle= @board.description
-.container
-.table-container
-  table.table.is-fullwidth.is-hoverable
-    thead :tr
-      th タイトル
-      th レス
-      / th 勢い
-      th 最終更新日
-      th 作成日
-    tbody
-      - @topics.each do |topic|
-        tr
-          td= link_to topic.title, board_topic_path(@board, topic)
-          td= topic.comments_count
-          / td= topic.comments_count / (Time.now - topic.created_at).to_sec
-          td= l( topic.created_at, format: :semilong)
-          td= l( topic.created_at, format: :semilong)
+
+sction
+  .table-container
+    table.table.is-fullwidth.is-hoverable
+      thead :tr
+        th タイトル
+        th レス
+        / th 勢い
+        th 最終更新日
+        th 作成日
+      tbody
+        - @topics.each do |topic|
+          tr
+            td= link_to topic.title, board_topic_path(@board, topic)
+            td= topic.comments_count
+            / td= topic.comments_count / (Time.now - topic.created_at).to_sec
+            td= l( topic.created_at, format: :semilong)
+            td= l( topic.created_at, format: :semilong)
 
 / .
   .columns.is-gapless

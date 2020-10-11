@@ -51,26 +51,59 @@ Contribution directions go here.
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 ## TODO
+
+- [ ] 昨日削減する
+- [ ] 掲示板登録画面
+  - [] 作成後のリダイレクト
+    - [] HTML
+    - [x] JS
+  - [] 編集 Form の URL
+  - [] 編集 Form の Submit 文字列の書き換え
+  - [] ユーザ権限の検討
+  - [] テスト
+  - [] 掲示板作成数の制限
 - テストを作る
   - [ ] モデル
   - [ ] コントローラー
+  - [ ] CSV,XSL を利用したテスト（特にパーミッション関係）
 - レイアウト調整
   - [ ] モバイル表示時に各掲示板トップのポスト数表示を小さくする
-  - [ ] 2ch風レイアウトの追加
+  - [ ] 2ch 風レイアウトの追加
 - [ ] 多言語対応
   - [ ] 時間表示
   - [ ] UI
 - [ ] 追加機能
-  - [ ] dummy appにPostコントローラーを作って、掲示板を読み込めるようにする
+  - [ ] dummy app に Post コントローラーを作って、掲示板を読み込めるようにする
   - [ ] 画像投稿機能
   - [ ] 引用機能
   - [ ] 過去ログ機能
   - [ ] 次スレ作成機能
-  - [ ] WebSocket対応
+  - [ ] 掲示板読み込み機能
+  - [ ] WebSocket 対応
+  - [ ] Ban User List
+  - [ ] Ban IP List
+  - [ ] ユーザー機能をスコープ(/user)以下にまとめる
+    - [ ] ツールバーの React 化
+    - [ ] プロキシによるキャッシュを有効にする
 
 ## 参考
 
 - RailsAdmin
+- https://gist.github.com/dhh/782fb925b57450da28c1e15656779556
+
+## MEMO
+
+- Thredded
+- Stateman vs AASM
+  - Stateman-diagram あるしこっち？
+- rails こまんどあるある
+  - rails db:migrate:reset
+  - rails db:fixtures:load
+  - rails app::annotate_models
+  - rails app::annotate_routes
+- rails console での挙動
+  - app.nextbbs.root_path
+  - app.nextbbs.board_path,
 
 ## 参考文献
 

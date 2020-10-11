@@ -1,19 +1,25 @@
-
 module Nextbbs
   class Config
     DEFAULT_CURRENT_USER = proc { }
     DEFAULT_AUTHENTICATE = proc { }
     DEFAULT_AUTHORIZE_WITH = proc { }
     DEFAULT_AUDIT_WITH = proc { }
+    DEFAULT_QUOTA_BOARD_WITHIN = proc { }
 
     attr_accessor :bbs_name
     attr_accessor :compatible_2ch
     attr_accessor :owner_model
+    attr_accessor :auto_create_board
+    attr_accessor :board_secret_hash
+    attr_accessor :max_boards_count
 
     def initialize
       @bbs_name = "Nextbbs"
       @compatible_2ch = true
       @authenticate = DEFAULT_AUTHENTICATE
+      @auto_create_board = false
+      @board_secret_hash = SecureRandom.hex(64)
+      @max_boards_count = 2
     end
 
     ##################################################
@@ -83,6 +89,17 @@ module Nextbbs
     # def audit_with(&block)
     #   @audit_with = block if block
     #   @audit_with || DEFAULT_AUDIT_WITH
+    # end
+
+    ##################################################
+    # Quota(容量制限)
+    ##################################################
+    # モデル内でinstance_evalで特異メソッドを参照させるの嫌だなっておもったので、
+    # 変更するときはコントローラを継承してnew, createメソッドで作るモデルを変更してもらうことにする
+    # もしくはFormModelでのカウントを制限する
+    # def quota_board_within_limit(&block)
+    #   @quota_board_within_limit = block if block
+    #   @quota_board_within_limit || DEFAULT_QUOTA_BOARD_WITHIN
     # end
   end
 end

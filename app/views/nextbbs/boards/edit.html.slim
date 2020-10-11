@@ -1,6 +1,79 @@
-h1
-  | Editing Board
-= render 'form', board: @board
-= link_to 'Show', @board
-|  | 
-= link_to 'Back', boards_path
+- provide(:full_title, "コントロール画面 #{@board.title}")
+
+section.hero.is-danger
+  .hero-body
+    / .container.is-fluid
+    .container
+      h1.title= @board.title
+      h2.subtitle 詳細設定
+      / p
+        span.is-pulled-right
+          = link_to "新規スレッドの作成", new_board_topic_path(@board), class: "button is-primary is-medium"
+      nav.level
+        .level-left
+          .level-item.has-text-centered
+            div
+              p.heading  合計トピック
+              p.title=   @topics.count
+          .level-item.has-text-centered
+            div
+              p.heading  合計レス
+              / TODO: countをさせる方法考える(とりあえずsum(topic.comments.count)でいい？)
+              p.title   XXXX
+        .level-right
+          .level-item
+            = link_to "コントロール画面",control_board_path(@board), class: "button is-primary"
+          .level-item
+            = link_to "通常画面に戻る", board_path(@board), class: "button is-primary"
+
+section.hero
+  .hero-body
+    .container
+      / h3.title.is-3 編集
+      = render 'form', board: @board, path: board_path(@board)
+      // TODO: path: board_url(@board)する必要あるけども？
+      // control_board_url とのかねあいががが
+
+section.hero
+  .hero-body
+    .container
+      h3.title.is-3 Danger Zone
+
+      button#nextbbs_board_destroy-action 掲示板の削除
+      #nextbbs_board_destroy-modal.modal
+        .modal-background
+        .modal-card
+          header.modal-card-head
+            p.modal-card-title 掲示板の削除
+            button.delete aria-label="close"
+          section.modal-card-body
+            /! Content ...
+            | 掲示板を削除すると元に戻すことはできません。<br />
+            | 削除するには以下の値を入れてください。
+            = form_with(model: @board, method: :delete, data: { remote: false }) do |f|
+              - if @board.errors.any?
+                #error_explanation
+                  h2
+                    = pluralize(@board.errors.count, "error")
+                    |  prohibited this board from being saved:
+                  ul
+                    - @board.errors.full_messages.each do |message|
+                      li
+                        = message
+              .field
+                = f.label "掲示板に設定しているハッシュを入力してください", class: "label"
+                = f.text_field :destroy_seed, class: "input"
+              .field.is-grouped.is-grouped-right.actions
+                = f.submit :delete, data: { confirm: "本当に掲示板が削除されます。良いですか？" }, class: "button is-danger"
+          footer.modal-card-foot
+            / = link_to '掲示板を削除する', board_path(@board), method: :delete,
+            /     data: { confirm: "本当に掲示板が削除されます。良いですか？" }, class: "button is-danger"
+            / button.button.is-danger 掲示板を削除する
+            button.button.cancel キャンセル
+
+section.hero
+  .hero-body
+    .container
+      = link_to 'コントロール画面に戻る', control_board_path(@board)
+      = "|"
+      = link_to '掲示板を表示する', @board

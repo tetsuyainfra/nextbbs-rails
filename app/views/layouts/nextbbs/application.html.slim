@@ -9,14 +9,27 @@ html
     = csp_meta_tag
     = render "layouts/nextbbs/header"
     = javascript_include_tag "nextbbs/application"
+    - if controller_path_javascript_exists?(controller.controller_name)
+      = javascript_include_tag "nextbbs/controllers/#{controller.controller_name}"
+
+
     = stylesheet_link_tag    "nextbbs/application", media: "all"
     / = stylesheet_link_tag    "nextbbs/topics", media: "all"
   body
+    /! navbar
     - if content_for?(:navbar)
       = yield(:navbar)
     - else
       = render "layouts/nextbbs/navbar"
+
+    /! notification
+    - if flash.any?
+      = render "layouts/nextbbs/notification"
+
+    /! contents
     = yield
+
+    /! footer
     - if content_for?(:footer)
       = yield(:footer)
     - else

@@ -50,14 +50,20 @@ class ActiveSupport::TestCase
     end
   end
 
-
-  def log_out(scope=nil)
+  def log_out(scope = :user)
     if defined?(:login_as)
       #use warden helper
-      logout scope
+      logout(scope)
     else #controller_test, model_test
       #use devise helper
       sign_out scope
     end
   end
+end
+
+if ENV.fetch("LOG_OUTPUT_CONSOLE", false)
+  # ログをコンソールに出力する
+  Rails.logger = Logger.new(STDOUT) # 追記
+  # SQLのログ
+  # ActiveRecord::Base.logger = Logger.new(STDOUT) # 追記
 end

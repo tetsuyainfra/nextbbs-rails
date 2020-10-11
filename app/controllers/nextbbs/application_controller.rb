@@ -3,6 +3,7 @@ module Nextbbs
     protect_from_forgery with: :exception
 
     helper_method :_current_user
+    helper_method :_user_quota_board_with
 
     def _current_user
       instance_eval(&Nextbbs.config.current_user_method)
@@ -18,6 +19,15 @@ module Nextbbs
 
     def remote_ip
       request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
+    end
+
+    def _user_quota_board_with
+      r = instance_eval(&Nextbbs.config.user_quota_board_with)
+    end
+
+    # Ajax用のredirectスクリプトを返すメソッド
+    def ajax_redirect_to(redirect_uri)
+      { js: "window.location.replace('#{redirect_uri}');" }
     end
 
     ##################################################

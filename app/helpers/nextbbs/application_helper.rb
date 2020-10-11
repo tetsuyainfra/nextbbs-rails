@@ -2,7 +2,7 @@ module Nextbbs
   module ApplicationHelper
 
     # Layoutにページタイトルを送る
-    def full_title(page_title = '')
+    def full_title(page_title = "")
       base_title = Nextbbs.config.bbs_name
       if page_title.empty?
         base_title
@@ -18,10 +18,11 @@ module Nextbbs
       h(str).gsub(/\R/, "<br>")
     end
 
-    # Ajax用のredirectスクリプトを返すメソッド
-    def ajax_redirect_to(redirect_uri)
-      { js: "window.location.replace('#{redirect_uri}');" }
+    # コントローラー用Javascriptがパスに含まれるか確認
+    def controller_path_javascript_exists?(script)
+      script = "#{Nextbbs::Engine.root}/app/assets/javascripts/nextbbs/controllers/#{script}.js"
+      Rails.logger.debug "script: #{script}"
+      File.exists?(script) || File.exists?("#{script}.coffee")
     end
-
   end
 end

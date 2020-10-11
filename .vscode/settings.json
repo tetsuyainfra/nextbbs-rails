@@ -1,3 +1,13 @@
 {
-  "plantuml.server": "http://localhost:13080"
+  "plantuml.server": "http://localhost:13080",
+  "indentRainbow.ignoreErrorLanguages": [
+    "ruby", // RufoでFormattingすると関数の引数などでインデントに沿わない改行が起きるため
+    // "markdown"
+  ],
+  // "ruby.useBundler": true,
+  "ruby.useLanguageServer": true,
+  "[ruby]": { // or [erb] / [gemfile]
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "mbessey.vscode-rufo",
+  }
 }

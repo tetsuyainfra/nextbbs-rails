@@ -3,21 +3,59 @@ require_dependency "nextbbs/application_controller"
 
 module Nextbbs
   class TopicsController < ApplicationController
-    before_action :set_topics, only: [:index]
+    before_action :set_board, only: [:new, :create]
     before_action :set_topic, only: [:show, :edit, :update, :destroy]
-    before_action :set_board, only: [:new, :create, :destroy]
+    before_action :set_topics, only: [:index]
 
     before_action :_authenticate_with, only: [:update, :edit, :destroy, :control]
 
     # GET /topics
     def index
-      render "nextbbs/boards/show"
+      respond_to do |format|
+        case @board.status.to_sym
+        when :deleted
+          format.html { head :not_found }
+          format.json { head :not_found } # これでいいかな？
+        when :unpublished
+          if _current_user == @board.owner
+            format.html { render "nextbbs/boards/show" }
+            format.json { render "nextbbs/boards/show" }
+          else
+            # return 403
+            format.html { head :not_found }
+            format.json { head :not_found } # これでいいかな？
+          end
+        when :published
+          format.html { render "nextbbs/boards/show" }
+          format.json { render "nextbbs/boards/show" }
+        end
+      end
     end
 
     # GET /topics/1
     def show
       @comments = @topic.comments.sorted
       @new_comment = Form::Comment.new(topic: @topic)
+
+      respond_to do |format|
+        case @board.status.to_sym
+        when :deleted
+          format.html { head :not_found }
+          format.json { head :not_found } # これでいいかな？
+        when :unpublished
+          if _current_user == @board.owner
+            format.html { render }
+            format.json { render }
+          else
+            # return 403
+            format.html { head :not_found }
+            format.json { head :not_found } # これでいいかな？
+          end
+        when :published
+          format.html { render }
+          format.json { render }
+        end
+      end
     end
 
     # GET /topics/new
@@ -36,10 +74,12 @@ module Nextbbs
       # params[:board_id] == @board.id チェックする？
       @new_topic = Form::Topic.new(topic_params)
       @new_topic.board = @board
+      @new_topic.owner = _current_user || @board.owner
       @new_topic.status = Topic.statuses[:published]
       @new_topic.comments.each { |c|
         c.status = Comment.statuses[:published]
         c.ip = remote_ip
+        c.owner = _current_user || nil
       }
 
       # @topic = Topic.new(topic_params)
@@ -70,18 +110,26 @@ module Nextbbs
 
     # DELETE /topics/1(.:format)
     def destroy
-      # format.html { redirect_to board_topics_path(@board), notice: "Topic was successfully Deleted." }
-      # format.js   { render js: "window.location.replace('#{board_topics_url(@board)}');" }
-      # format.js { render js: "window.location.replace('#{control_board_url(@board)}');" }
       @board.topics.find(@topic.id)
+
+      # ユーザー認証
+      if _current_user != @board.owner
+        # 掲示板オーナー以外はリダイレクト
+        logger.debug "redirect to boards_path: #{board_path(@board)}"
+        # redirect_to board_path(@board), notice: "You have no permission." && return
+        redirect_to board_path(@board) and return
+        # redirect_to root_path
+      end
 
       respond_to do |format|
         if @topic.destroy
-          format.html { redirect_to boards_topics_path(@board), notice: "Topic was successfully destroyed." }
-          format.json { head :no_content }
+          logger.debug "success destroy"
+          format.html { redirect_to board_topics_path(@board), notice: "Topic was successfully destroyed." }
+          # format.json { head :no_content }
         else
+          logger.debug "failed to destroy"
           format.html { redirect_to boards_topics_path(@board), notice: "Topic was not destroyed. Tell Server Administrator" }
-          format.json { head :no_content }
+          # format.json { head :no_content }
         end
       end
     end
@@ -93,14 +141,14 @@ module Nextbbs
       @board = Board.find(params[:board_id])
     end
 
-    def set_topics
-      @board = Board.find(params[:board_id])
-      @topics = @board.topics
-    end
-
     def set_topic
       @board = Board.find(params[:board_id])
       @topic = @board.topics.find(params[:id])
+    end
+
+    def set_topics
+      @board = Board.find(params[:board_id])
+      @topics = @board.topics
     end
 
     # Only allow a trusted parameter "white list" through.

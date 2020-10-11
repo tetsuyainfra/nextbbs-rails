@@ -35,11 +35,12 @@ one:
   status: <%= Nextbbs::Comment.statuses[:published] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
-                   Faker::Internet.domain_name(subdomain: true) %>
+                  Faker::Internet.domain_name(subdomain: true) %>
   owner: one
 
-<% now = Time.zone.now %>
-<% 10.times.each do |i| %>
+<% N = 10 %>
+<% now = Time.zone.now - N.seconds %>
+<% N.times.each do |i| %>
 two_<%= i %>:
   topic: two
   name: MyName <%= i %>
@@ -47,7 +48,7 @@ two_<%= i %>:
   status: <%= Nextbbs::Comment.statuses[:published] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
-                   Faker::Internet.domain_name(subdomain: true) %>
+                  Faker::Internet.domain_name(subdomain: true) %>
   created_at: <%= (now + (1.seconds)*0.5*i).iso8601(6) %>
 <% end %>
 
@@ -57,7 +58,7 @@ three_1:
   status: <%= Nextbbs::Comment.statuses[:published] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
-                   Faker::Internet.domain_name(subdomain: true) %>
+                  Faker::Internet.domain_name(subdomain: true) %>
   body: |
     ( ﾟ∀ﾟ)つ●ｳﾝｺｸｳｶ?　⊂(ﾟ∀ﾟ )ｾﾝｷｭｩｰ♪
     ≡≡≡≡≡⊂｀⌒m9^Д^)⊃ﾌﾟｷﾞｬｰ!!
@@ -70,7 +71,7 @@ three_2:
   status: <%= Nextbbs::Comment.statuses[:published] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
-                   Faker::Internet.domain_name(subdomain: true) %>
+                  Faker::Internet.domain_name(subdomain: true) %>
   body: |
     　　　　　　∧＿∧　 　 　　∧＿∧
     　　　　　_（　´∀｀）　　　　（´∀｀　）
@@ -97,7 +98,7 @@ three_3:
   status: <%= Nextbbs::Comment.statuses[:unpublished] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
-                   Faker::Internet.domain_name(subdomain: true) %>
+                  Faker::Internet.domain_name(subdomain: true) %>
 three_4:
   topic: three
   name: MyString2
@@ -105,7 +106,7 @@ three_4:
   status: <%= Nextbbs::Comment.statuses[:pending] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
-                   Faker::Internet.domain_name(subdomain: true) %>
+                  Faker::Internet.domain_name(subdomain: true) %>
 three_5:
   topic: three
   name: MyString2
@@ -113,8 +114,9 @@ three_5:
   status: <%= Nextbbs::Comment.statuses[:deleted] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
-                   Faker::Internet.domain_name(subdomain: true) %>
+                  Faker::Internet.domain_name(subdomain: true) %>
 
+<% if false %>
 # <% 10.times.each do |ti| %>
 #   <% 1000.times.each do |ci| %>
 # <% name_seeds = [nil, proc{Faker::Name.name}, proc{Faker::Name.first_name}, proc{Faker::JapaneseMedia::DragonBall.character}] %>
@@ -125,3 +127,4 @@ three_5:
 #   status: 1
 #   <% end %>
 # <% end %>
+<% end %>

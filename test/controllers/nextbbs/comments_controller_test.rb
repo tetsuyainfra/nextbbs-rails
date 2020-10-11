@@ -3,18 +3,41 @@ require "test_helper"
 module Nextbbs
   class CommentsControllerTest < ActionDispatch::IntegrationTest
     include Engine.routes.url_helpers
+    include Warden::Test::Helpers
 
     setup do
       @board = nextbbs_boards(:one)
       @topic = nextbbs_topics(:one)
       @comments = @topic.comments
       @comment = @topic.comments.sorted.first
+      @user = @board.owner
+
+      @other_user = User.new email: "john@example.com", password: "12345678"
+      @other_user.save!
+    end
+
+    ################################################################################
+    # GET /comments/index
+    # コメント履歴の表示
+    test "should show owners comments at comments" do
+      log_in(@user)
+      get comments_url
+      assert_response :success
+
+      log_in(@other_user)
+      get comments_url
+      assert_response :success
+    end
+
+    test "should show owners comments at comments with nologin" do
+      log_out
+      get comments_url
+      assert_redirected_to main_app.new_user_session_path
     end
 
     # 個別レス表示
     test "should not show comment" do
       get comment_url(@comment)
-      # 現在はそんざいしない
       assert_response :success
     end
 
@@ -22,7 +45,7 @@ module Nextbbs
     # TODO: ないことのチェックってどうする？
     # test "should not get new" do
     #   # get new_comment_url
-    #   get File.join(comments_url, "new")
+    #   # get File.join(comments_url, "new")
     #   assert_response :missing
     # end
 
@@ -78,7 +101,7 @@ module Nextbbs
       date = last_comment.created_at.to_date
       hash_token = last_comment.topic.board.hash_token
       hashid = OpenSSL::HMAC.hexdigest(
-        OpenSSL::Digest.new('sha256'),
+        OpenSSL::Digest.new("sha256"),
         "#{hash_token}#{date.to_s}", ipaddr.to_s
       )[0..8]
 
@@ -91,8 +114,9 @@ module Nextbbs
 
     # BAN制限時の書き込み制限(Boardに設定が関連付けられる)
 
-
-
+    ################################################################################
+    # PATCH /comments/[:id]
+    #
     # レスの書き換えURL(ログインユーザーのみ)
     # test "should get edit" do
     #   get edit_comment_url(@comment)
@@ -105,15 +129,74 @@ module Nextbbs
     #   assert_redirected_to comment_url(@comment)
     # end
 
+    ################################################################################
+    # DELETE /comments/[:id]
+    #
     # レスの状態変更(削除(板オーナー))
     # レスの状態変更(削除(板ボランティア))
     # レスの状態変更(削除(運営))
-    # test "should destroy comment" do
-    #   assert_difference('Comment.count', -1) do
-    #     delete comment_url(@comment)
-    #   end
+    test "should destroy comment" do
+      assert_no_difference("Comment.count") do
+        delete comment_url(@comment)
+      end
 
-    #   assert_redirected_to comments_url
-    # end
+      assert_redirected_to comments_url
+    end
+
+    ################################################################################
+    # 追加テスト
+    # POST /comments/[:id]
+    # [Owner] 非表示になっている掲示板でのオーナー書き込みコメントの表示確認
+    # オーナーだといずれも表示可能
+    test "each should be hidden with unpublished board without owner" do
+      # テストの前提条件
+      @board.update(status: :unpublished)
+      assert_equal @comment.owner, @board.owner
+      assert_equal @comment.status, "published"
+
+      # 板オーナーだと表示可能
+      log_in(@board.owner)
+      get comment_url(@comment)
+      assert_response :success
+
+      # 別ユーザーだと表示不可
+      assert_not_equal @board.owner, @other_user
+      log_in(@other_user)
+      get comment_url(@comment)
+      assert_response :missing
+
+      # 非ログインだと表示できない
+      log_out
+      get comment_url(@comment)
+      assert_response :missing
+    end
+
+    ################################################################################
+    # 追加テスト
+    # POST /comments/[:id]
+    # [Owner] 非表示になっている掲示板での別ユーザー書き込みコメントの表示確認
+    # オーナーだといずれも表示可能
+    test "by other user should be hidden with unpublished board without comment owner" do
+      # テストの前提条件
+      @board.update(status: :unpublished)
+      @comment.update(owner: @other_user)
+      assert_not_equal @comment.owner, @board.owner
+      assert_equal @comment.status, "published"
+
+      # 板オーナーだと表示可能
+      log_in(@board.owner)
+      get comment_url(@comment)
+      assert_response :success
+
+      # 別ユーザー(コメントオーナー)だと表示可能
+      assert_not_equal @board.owner, @other_user
+      log_in(@other_user)
+      get comment_url(@comment)
+      assert_response :success
+
+      log_out
+      get comment_url(@comment)
+      assert_response :missing
+    end
   end
 end
