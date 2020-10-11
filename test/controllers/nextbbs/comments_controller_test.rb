@@ -86,13 +86,13 @@ module Nextbbs
         post comments_url,
              params: {
                form_comment: {
+                 topic_id: @topic.id,
                  body: "hash test",
                  name: "hash testname",
-                 topic_id: @topic.id,
                },
              }
       end
-      last_comment = Comment.sorted.last
+      last_comment = @topic.comments.sorted.last
       assert_equal last_comment.body, "hash test"
       assert_equal last_comment.name, "hash testname"
       assert_equal last_comment.topic_id, @topic.id
