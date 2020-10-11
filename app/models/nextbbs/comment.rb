@@ -21,7 +21,7 @@ module Nextbbs
     # MEMO: コメント書き換え機能がつくと変更の必要あり
 
     validates :body, presence: true, length: { minimum: 1 }
-    scope :sorted, -> { order([:created_at, :id]) }
+    scope :sorted, -> { order([:sequential_id]) }
 
     def calc_hashid
       hash_token = topic.board.hash_token

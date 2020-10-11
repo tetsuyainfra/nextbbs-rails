@@ -1,15 +1,51 @@
 div.comment data-date=comment.created_at data-no=comment.no data-hashid=comment.hashid
-  .meta
-    span.no= comment.no
-    - if comment.name.present?
-      span.name :b
-        - if comment.email.present?
-            a(href="mailto:${comment.email}")= comment.name
-        - else
-            a= comment.name
-    - else
-      span.name :b ななしさん
-    span.date= "#{l(comment.created_at, format: :long)}"
-    span.hashid= "ID:#{comment.hashid}"
-  .body
-    = comment.body
+  - case comment.status
+  - when "published" then
+    .meta
+      span.no= comment.no
+      - if comment.name.present?
+        span.name :b
+          - if comment.email.present?
+              a(href="mailto:${comment.email}")= comment.name
+          - else
+              a= comment.name
+      - else
+        span.name :b ななしさん
+      span.date= "#{l(comment.created_at, format: :long)}"
+      span.hashid= "ID:#{comment.hashid}"
+      / span.comment_id= comment.id
+    .body
+      = comment.body
+  - when "deleted" then
+    .meta
+      span.no= comment.no
+      span.name :b 削除済み
+      span.date= "#{l(comment.updated_at, format: :long)}"
+      span.hashid= "ID:#{comment.hashid}"
+    .body 削除済み
+  - else
+    .meta
+      span.no= comment.no
+      span.name :b 非公開
+      span.date= "#{l(comment.updated_at, format: :long)}"
+      span.hashid= "ID:#{comment.hashid}"
+    .body 非公開
+
+/ dl.comments
+/   - @comments.each_with_index do | c, i |
+/     - no = i + 1
+/     - case c.status
+/     - when "published" then
+/       dt
+/         = "#{no} 名前："
+/         = link_to "mailto: #{c.email}" do
+/           b= c.name
+/         = " #{l(c.created_at, format: :long)}"
+/         = " ID:#{c.hashid}"
+/       dd= raw(newline2br(c.body))
+/     - when "deleted" then
+/       dt= "#{no} 名前：delted #{l(c.created_at, format: :long)} ID:#{c.hashid}"
+/       dd 削除済み
+/     - else
+/       dt= "#{no} 名前：other #{l(c.created_at, format: :long)} ID:#{c.hashid}"
+/       dd 非表示だよ

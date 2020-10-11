@@ -1,28 +1,3 @@
-sass:
-  .comments
-    display: flex;
-    flex-direction: column;
-    flex-basis: auto;
-    // align-items: flex-start;
-    align-items: center;
-  .comment
-    // display: inline-block;
-    border-width: 1px;
-    border-style: none solid solid none;
-    border-color: #ddd;
-    background-color: #efefef;
-    margin-bottom: 8px;
-    padding: 8px;
-    .meta
-      font-size: 14px;
-      color: #333;
-      span + span
-        margin-left: 0.5rem
-    .body
-      font-size: 17px
-      color: #333
-      padding: 10px 0
-      overflow-wrap: break-word;
 
 section.section.is-small
   .container.is-fluid
@@ -32,5 +7,5 @@ section.section.is-small
 section
   .container.is-fluid
     .topics
-      div.comments
+      div.nextbbs-comments.align-center
         = render partial: "comment", locals: { comment: @comment }

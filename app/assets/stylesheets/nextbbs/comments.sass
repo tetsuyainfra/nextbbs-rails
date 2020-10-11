@@ -1,0 +1,30 @@
+///*
+//  Place all the styles related to the matching controller here.
+//  They will automatically be included in application.css.
+//*/
+
+.nextbbs-comments
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  align-items: flex-start;
+  .comment
+    // display: inline-block;
+    border-width: 1px;
+    border-style: none solid solid none;
+    border-color: #ddd;
+    background-color: #efefef;
+    margin-bottom: 8px;
+    padding: 8px;
+    .meta
+      font-size: 14px;
+      color: #333;
+      span + span
+        margin-left: 0.5rem
+    .body
+      font-size: 17px
+      color: #333
+      padding: 10px 0
+      overflow-wrap: break-word;
+  &.align-center
+    align-items: center;
