@@ -6,6 +6,7 @@ PATH
       rails-i18n
       railties (>= 6.0, < 6.1)
       sass-rails
+      sequenced (~> 3.2)
       slim
 
 GEM
@@ -223,6 +224,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    sequenced (3.2.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
