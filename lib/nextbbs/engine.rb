@@ -1,3 +1,4 @@
+require "sequenced"
 require "counter_culture"
 require "slim"
 require "rails-i18n"

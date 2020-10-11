@@ -1,6 +1,8 @@
 module Nextbbs
   class Comment < ApplicationRecord
     belongs_to :topic
+    acts_as_sequenced scope: :topic_id
+
     counter_culture [:topic, :board]
     counter_culture :topic
 
