@@ -8,6 +8,13 @@
     "esbenp.prettier-vscode",
     "syler.sass-indented",
 
+    // markdown 関係
+    "shd101wyy.markdown-preview-enhanced", // preview表示
+    // "docsmsft.docs-markdown",
+    //"mrmlnc.vscode-remark", // formatter
+    "DavidAnson.vscode-markdownlint", //linter
+
+
     // 動かない@2020/08/08
     // "jnbt.vscode-rufo",
 

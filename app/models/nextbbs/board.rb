@@ -1,10 +1,11 @@
 module Nextbbs
   class Board < ApplicationRecord
+    include AASM
     MAX_BOARDS_COUNT = 5
     has_many :topics, dependent: :destroy
 
     enum status: {
-      deleted: -1,       # 削除済み(削除理由は別途保存)
+      removed: -1,       # 削除済み(削除理由は別途保存)
       unpublished: 0,   # 表示を取り下げ
       published: 1,     # 表示
     }
@@ -31,6 +32,8 @@ module Nextbbs
     end
 
     scope :published, -> { where(status: "published") }
+
+    include BoardStateMachine
   end
 end
 

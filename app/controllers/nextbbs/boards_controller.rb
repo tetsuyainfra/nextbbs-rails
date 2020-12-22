@@ -17,7 +17,7 @@ module Nextbbs
       @topics = @board.topics
       respond_to do |format|
         case @board.status.to_sym
-        when :deleted
+        when :removed
           format.html { head :not_found }
           format.json { head :not_found } # これでいいかな？
         when :unpublished
@@ -32,6 +32,8 @@ module Nextbbs
         when :published
           format.html { render }
           format.json { render }
+        else
+          raise NotImplementedError
         end
       end
     end

@@ -1,35 +1,19 @@
-div.comment data-date=comment.created_at data-no=comment.no data-hashid=comment.hashid
-  - case comment.status
-  - when "published" then
-    .meta
-      span.no= comment.no
-      - if comment.name.present?
-        span.name :b
-          - if comment.email.present?
-              a(href="mailto:${comment.email}")= comment.name
-          - else
-              a= comment.name
-      - else
-        span.name :b ななしさん
-      span.date= "#{l(comment.created_at, format: :long)}"
-      span.hashid= "ID:#{comment.hashid}"
-      / span.comment_id= comment.id
-    .body
-      = comment.body
-  - when "deleted" then
-    .meta
-      span.no= comment.no
-      span.name :b 削除済み
-      span.date= "#{l(comment.updated_at, format: :long)}"
-      span.hashid= "ID:#{comment.hashid}"
-    .body 削除済み
-  - else
-    .meta
-      span.no= comment.no
-      span.name :b 非公開
-      span.date= "#{l(comment.updated_at, format: :long)}"
-      span.hashid= "ID:#{comment.hashid}"
-    .body 非公開
+
+- c = showable_comment(comment)
+
+div.comment(data-date=c.date data-no=c.no data-hashid=c.hashid)
+  .meta
+    span.no(id=c.anchor)= c.no
+    span.name
+      b
+        a(href=c.email)= c.name
+    span.date= "#{l(c.date, format: :long)}"
+    span.hashid= "ID:#{c.hashid}"
+    span.comment_id= link_to "CID: #{c.id}", c.cid_path
+  .body
+    / = c.body
+    = raw(newline2br(c.body))
+
 
 / dl.comments
 /   - @comments.each_with_index do | c, i |

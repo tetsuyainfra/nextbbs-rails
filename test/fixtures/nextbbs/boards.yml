@@ -17,7 +17,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: one_
+  id: 1234
+  name: one
   title: OneBoard
   description: This is OneBoard
   status: <%= Nextbbs::Board.statuses[:published] %>
@@ -25,7 +26,8 @@ one:
   owner: one
 
 two:
-  name: two_
+  id: 1235
+  name: two
   title: TwoBoard(日本語テスト)
   description: |
     This is TwoBoard
@@ -35,6 +37,7 @@ two:
   owner: two
 
 three:
+  id: 1236
   name: three
   title: DummiesBoard
   description: |
@@ -47,7 +50,7 @@ four:
   title: DeletedBoard
   description: |
     This is DeletedBoard
-  status: <%= Nextbbs::Board.statuses[:deleted] %>
+  status: <%= Nextbbs::Board.statuses[:removed] %>
   owner: one
 
 five:

@@ -52,6 +52,8 @@ module Nextbbs
         status: Comment.statuses[:published],
       )
       @comment.save!
+
+      @other_user = users(:two)
     end
 
     test "コメントにはUserを追加できる" do
@@ -115,13 +117,10 @@ module Nextbbs
       @comment.status = Comment.statuses[:published]
       assert @comment.save
 
-      @comment.status = Comment.statuses[:unpublished]
-      assert @comment.save
+      # @comment.status = Comment.statuses[:unpublished]
+      # assert @comment.save
 
-      @comment.status = Comment.statuses[:pending]
-      assert @comment.save
-
-      @comment.status = Comment.statuses[:deleted]
+      @comment.status = Comment.statuses[:removed]
       assert @comment.save
     end
 
@@ -141,6 +140,31 @@ module Nextbbs
 
       @comment.hashid = ""
       assert @comment.save
+    end
+
+    ################################################################################
+    # Stateテスト
+    #
+    test "遷移テスト" do
+      @comment.owner = @user
+
+      assert @comment.published?
+      assert_not @comment.removed?
+      assert @comment.owner == @user
+
+      # コメントユーザーなら削除できる
+      @comment.remove(@user)
+      assert @comment.removed?
+
+      @comment.published!
+      assert @comment.published?
+
+      # コメント以外は削除できない
+      # assert_raises AASM::InvalidTransition do
+      assert_raises do
+        @comment.remove(@other_user)
+      end
+      assert_not @comment.removed?
     end
   end
 end

@@ -2,9 +2,37 @@
 / - provide(:full_title, "#{@topic.title}")
 
 section.section.is-small
-  .container.is-fluid
-    p.has-text-centered
-      = link_to "掲示板に戻る", @board
+  .container
+    nav.level
+      /! Left side
+      .level-left
+        / .level-item
+          p.subtitle.is-5
+            strong 123
+            | posts
+        / .level-item
+          .field.has-addons
+            p.control
+              input.input placeholder=("Find a post") type="text" /
+            p.control
+              button.button
+                | Search
+      /! Right side
+      .level-right
+        p.level-item
+          strong All
+        / p.level-item
+        /   / a Published
+        / p.level-item
+        /   / a Drafts
+        / p.level-item
+        /   / a Deleted
+        / p.level-item
+        /   a.button.is-success New
+        / p.level-item
+        /   a.disabled 最新50
+        p.level-item
+          a id="top_level_anchor" href="#bottom_level_anchor" ↓
 
 section
   .container.is-fluid
@@ -16,20 +44,53 @@ section
       div.nextbbs-comments
         = render partial: "nextbbs/comments/comment", collection: @comments
 
-
+section.section.is-small
+  .container
+    nav.level
+      /! Left side
+      .level-left
+        / .level-item
+        /   p.subtitle.is-5
+        /     strong 123
+        /     | posts
+        p.level-item
+          = link_to "掲示板に戻る", @board
+        / .level-item
+          .field.has-addons
+            p.control
+              input.input placeholder=("Find a post") type="text" /
+            p.control
+              button.button
+                | Search
+      /! Right side
+      .level-right
+        p.level-item
+          strong All
+        / p.level-item
+        /   / a Published
+        / p.level-item
+        /   / a Drafts
+        / p.level-item
+        /   / a Deleted
+        / p.level-item
+        /   / a.button.is-success New
+        p.level-item
+          a id="bottom_level_anchor" href="#top_level_anchor" ↑
 
 section.section.is-small
   .container.is-fluid
     p.has-text-centered
-      = link_to "掲示板に戻る", @board
-    p.has-text-centered
-      / ALL
-      / 前100
-      / 次100
-      / 最新50
+    div
+      .has-text-centered
+        / ALL
+        / 前100
+        / 次100
+        / 最新50
+
+
 section.section.is-small
   .container.is-fluid
-    = form_with(model: @new_comment, url: comments_path) do |form|
+    = form_with(model: @new_comment, url: comments_path, local: true) do |form|
       .field.is-grouped
         p.control
           = form.submit "送信", class: "button is-success"

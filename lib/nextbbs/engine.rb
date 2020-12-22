@@ -1,3 +1,4 @@
+require "aasm"
 require "sequenced"
 require "counter_culture"
 require "slim"

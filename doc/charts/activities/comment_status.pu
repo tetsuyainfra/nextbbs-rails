@@ -1,24 +1,33 @@
 @startuml
 title Comment Model's status
 
-state Normal{
-  Public   : 公開中
-  Unpublic : 未公開
-  Logged   : 過去ログ化
+state Manageable {
+  ' Unpublished : 未公開
+  Published   : 公開中
+  Submitted   : 提出済み
+  Rejected    : 拒否
+  ' Logged   : 過去ログ化
 }
+note right of Manageable
+ TopicがPublishedでのみ変更可能
+end note
 
-state Abnormal{
-  Ban    : Admin banned board.
-  Delete : User deleted board by self.
-}
+' state Abnormal{
+  ' Banned  : Admin banned comment
+  Removed : Deleted comment.
+  Removed : reason stored other column.
+' }
 
-[*]      -down-> Public : [U/G]コメントの作成
-Public --> Unpublic : [U]
-Unpublic --> Public : [U]
-Public   --> Logged : [S]
+[*]      -down-> Published : [U/G]コメントの作成
+[*]      -down-> Submitted : [U/G]コメントの作成
+' Published   --> Unpublished : [U]
+Submitted   -right-> Published : [O]
+Submitted   -down-> Rejected : [O]
+Rejected   --> Submitted : [U]
+' Published   --> Logged : [S]
 
-Normal --> Ban : [A]
-Normal --> Delete : [U/O]
+Published --> Removed : [A/U/O]
+' Normal --> Removed : [A/U/O]
 
 legend
 - S : System
@@ -27,5 +36,6 @@ legend
 - U : User
 - G : Guest
 end legend
+
 
 @end

@@ -1,13 +1,38 @@
 {
+  // PlantUML
+  "plantuml.render": "PlantUMLServer",
   "plantuml.server": "http://localhost:13080",
+
+  // prettier
+  "prettier.disableLanguages": [
+    // "vue",
+    "markdown",
+  ],
+
+  // ruby
+  // "ruby.useBundler": true,
+  "ruby.useLanguageServer": true,
   "indentRainbow.ignoreErrorLanguages": [
     "ruby", // RufoでFormattingすると関数の引数などでインデントに沿わない改行が起きるため
     // "markdown"
   ],
-  // "ruby.useBundler": true,
-  "ruby.useLanguageServer": true,
   "[ruby]": { // or [erb] / [gemfile]
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "mbessey.vscode-rufo",
-  }
+  },
+
+  // markdown
+  "[markdown]": {
+    // "editor.wordWrap": "on",
+    // "editor.quickSuggestions": false,
+    // "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    // "editor.defaultFormatter": "mrmlnc.vscode-remark"
+  },
+  // "remark.format": {
+  //   "rules": {
+  //     // "closeAtx": true
+  //     "listItemIndent": "1"
+  //   },
+  //   "plugins": ["frontmatter"]
+  // },
 }

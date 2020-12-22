@@ -23,19 +23,22 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  board: one
+  # board: one
+  board_id: 1234
   owner: one
   title: "トピックサンプル１"
   status: <%= Nextbbs::Topic.statuses[:published] %>
 
 two:
-  board: two
+  # board: two
+  board_id: 1235
   owner: two
   title: "トピックサンプル2"
   status: <%= Nextbbs::Topic.statuses[:published] %>
 
 three:
-  board: three
+  # board: three
+  board_id: 1236
   owner: one
   title: "トピックサンプル3(for1)"
   status: <%= Nextbbs::Topic.statuses[:unpublished] %>
@@ -43,8 +46,16 @@ three:
 <% seeds = [proc {Faker::Lorem.sentence}, proc {Faker::Lorem.question}] %>
 <% 3.times.each do |i| %>
 topic_<%= i %>:
-  board: three
+  # board: three
+  board_id: 1236
   owner: three
   title: <%= seeds.sample(1).first.call() %>
   status: <%= Nextbbs::Topic.statuses[:published] %>
 <% end %>
+
+topic_999:
+  # board: three
+  board_id: 1236
+  owner: three
+  title: 999スレ
+  status: <%= Nextbbs::Topic.statuses[:published] %>

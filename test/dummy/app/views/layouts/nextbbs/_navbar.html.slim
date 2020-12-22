@@ -1,6 +1,5 @@
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
-
     // Get all "navbar-burger" elements
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
@@ -22,12 +21,11 @@ javascript:
         });
       });
     }
-
   });
 
 nav.navbar aria-label="main navigation" role="navigation"
   .navbar-brand
-    a.navbar-item href=main_app.root_path Nextbbs
+    a.navbar-item href=root_path Nextbbs
     a.navbar-burger.burger aria-expanded="false" aria-label="menu" data-target="navbarBasicExample" role="button"
       span aria-hidden="true"
       span aria-hidden="true"
@@ -40,8 +38,12 @@ nav.navbar aria-label="main navigation" role="navigation"
   /   = link_to "コメント履歴", comments_path, class: "navbar-item is-active"
   #navbarBasicExample.navbar-menu
     .navbar-start
-      = link_to "掲示板TOP", root_path, class: "navbar-item"
+      / = link_to "掲示板TOP", root_path, class: "navbar-item"
+      /
       = link_to "掲示板一覧", boards_path, class: "navbar-item"
+      - if @board.present? && ! ( controller.is_a? Nextbbs::BoardsController )
+        = link_to @board.title, board_path(@board), class: "navbar-item"
+      / 右側
       - if _current_user
         - is_active = current_page?(yours_boards_path) ? "is-active" : nil
         = link_to "あなたの掲示板", yours_boards_path, class: "navbar-item #{is_active}"

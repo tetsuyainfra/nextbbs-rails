@@ -61,7 +61,8 @@ module Nextbbs
                },
              }
         # redirect先はtopicの一覧
-        assert_redirected_to board_topic_url(@comment.topic.board, @comment.topic)
+        # 最終コメントの次のNOになるので +1
+        assert_redirected_to board_topic_url(@comment.topic.board, @comment.topic, anchor: "no_#{@comment.no + 1}")
       end
     end
 
@@ -137,6 +138,7 @@ module Nextbbs
     # レスの状態変更(削除(運営))
     test "should destroy comment" do
       assert_no_difference("Comment.count") do
+        # 削除してもコメント数は変わらない あれ？これ規制できてなくね？
         delete comment_url(@comment)
       end
 

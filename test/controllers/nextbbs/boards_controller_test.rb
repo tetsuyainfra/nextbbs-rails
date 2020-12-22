@@ -78,7 +78,7 @@ module Nextbbs
     end
     # [Guest] deleteだと404になる
     test "delete status should hidden board" do
-      @board.status = :deleted
+      @board.status = :removed
       @board.save!
       get board_url(@board)
       assert_response :missing
@@ -194,7 +194,7 @@ module Nextbbs
       get board_url(@board)
       assert_response :success
 
-      @board.update(status: :deleted)
+      @board.update(status: :removed)
       get board_url(@board)
       assert_response :missing
     end
@@ -207,7 +207,7 @@ module Nextbbs
       get board_url(@board)
       assert_response :missing
 
-      @board.update(status: :deleted)
+      @board.update(status: :removed)
       get board_url(@board)
       assert_response :missing
     end
@@ -218,7 +218,7 @@ module Nextbbs
       get board_url(@board)
       assert_response :missing
 
-      @board.update(status: :deleted)
+      @board.update(status: :removed)
       get board_url(@board)
       assert_response :missing
     end

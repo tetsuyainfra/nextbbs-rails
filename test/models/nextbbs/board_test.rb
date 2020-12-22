@@ -160,7 +160,7 @@ module Nextbbs
       @board.status = Board.statuses[:unpublished]
       assert @board.save
 
-      @board.status = Board.statuses[:deleted]
+      @board.status = Board.statuses[:removed]
       assert @board.save
     end
 

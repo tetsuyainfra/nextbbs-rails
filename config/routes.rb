@@ -3,7 +3,7 @@ Nextbbs::Engine.routes.draw do
   get "test_flash", to: "page#test_flash"
 
   # resources :boards, trailing_slash: true do
-  resources :boards do
+  resources :boards, trailing_slash: true, constraints: Nextbbs::NotNichanBrowserConstraint do
     collection do
       get "yours"
     end
@@ -25,8 +25,11 @@ Nextbbs::Engine.routes.draw do
     #   end
     # end
   end
+  resources :comments, only: [:index, :show, :create, :destroy]
+
   if Nextbbs.config.compatible_2ch
     scope "boards", as: "" do
+      get "/:board_id/", to: "nichan#board", format: false, as: :nichan_board
       get "/:board_id/SETTING.TXT", to: "nichan#setting", format: false, as: :nichan_setting
       get "/:board_id/subject.txt", to: "nichan#subject", format: false, as: :nichan_subject
       get "/:board_id/dat/:topic_id.dat", to: "nichan#dat", format: false, as: :nichan_dat
@@ -36,8 +39,6 @@ Nextbbs::Engine.routes.draw do
       post "/test/bbs.cgi", to: "nichan#bbs_cgi", as: :nichan_bbs_cgi
     end
   end
-
-  resources :comments, only: [:index, :show, :create, :destroy]
 
   # こういうのもあるらしい
   # get '/stories/:name', to: redirect {|params, req| "/posts/#{params[:name].pluralize}" }

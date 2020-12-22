@@ -68,6 +68,18 @@ group :development do
   gem "i18n-tasks", "~> 0.9.31"
 end
 
+# 最適化用
+group :development do
+  gem "rack-mini-profiler"
+
+  # For memory profiling
+  # gem "memory_profiler"
+
+  # For call-stack profiling flamegraphs
+  # gem "flamegraph"
+  # gem "stackprof"
+end
+
 # 環境が整うまでdisable
 #group :test do
 #  # Adds support for Capybara system testing and selenium driver

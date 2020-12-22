@@ -1,5 +1,4 @@
-require 'test_helper'
-
+require "test_helper"
 
 module Nextbbs
   class NichanControllerTest < ActionDispatch::IntegrationTest
@@ -58,7 +57,7 @@ module Nextbbs
     end
 
     # test "should get bbs_cgi" do
-      # post  '/test/bbs.cgi',                        to: 'nichan#bbs_cgi',     as: :nichan_bbs_cgi
+    # post  '/test/bbs.cgi',                        to: 'nichan#bbs_cgi',     as: :nichan_bbs_cgi
     #   get nichan_bbs_cgi_url
     #   assert_response :success
     # end

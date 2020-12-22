@@ -3,23 +3,23 @@
 title Topic Model's status
 
 state Normal{
-  Public   : 公開中
-  Unpublic : 未公開
-  Logged   : 過去ログ化
+  Published   : 公開中
+  Unpublished : 未公開
+  Archived   : 過去ログ化
 }
 
-state Abnormal{
-  Ban    : Admin banned board.
-  Delete : User deleted board by self.
-}
+' state Abnormal{
+  Removed : User/Owner/Admin deleted board.
+  Removed : A reason is stored in other column.
+' }
 
-[*]      -down-> Public : [U/G]トピックの作成
-Public --> Unpublic : [O]
-Unpublic --> Public : [O]
-Public   --> Logged : [S]
+[*]      -down-> Unpublished : [U/G]トピックの作成
+[*]      -down-> Published   : [U/G]トピックの作成
+Published   -left-> Unpublished : [O]
+Unpublished -right-> Published : [O]
+Published   --> Archived : [S]
 
-Normal --> Ban : [A]
-Normal --> Delete : [O]
+Normal --> Removed : [A/O]
 
 legend
 - S : System

@@ -1,6 +1,7 @@
 # Nextbbs
 
-Short description and motivation.
+2ch 風スレッドフローティング掲示板を意識した
+アプリに組み込みやすい Rails マウンタブルエンジン
 
 ## Usage
 
@@ -50,9 +51,18 @@ Contribution directions go here.
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
-## TODO
 
-- [ ] 昨日削減する
+## TODO
+- [x] コメント書き込み後のリダイレクト
+- [x] コメントNOのNOT NULL化
+- [x] コメント番号1スタート リミット制限の確認
+- [x] 2chビューワ対応
+  - [x] コメント標準部のエスケープ確認 (ERBでは %= ならHTMLエスケープは自動で行われる)
+- [ ] リリース
+  - [ ] ユーザー登録付きリリース(twitter認証)
+  - [ ] 掲示板だけリリース
+
+- [ ] キャッシュの設定しやすいようにURLで設定画面を分ける
 - [ ] 掲示板登録画面
   - [] 作成後のリダイレクト
     - [] HTML
@@ -62,6 +72,8 @@ The gem is available as open source under the terms of the [MIT License](https:/
   - [] ユーザ権限の検討
   - [] テスト
   - [] 掲示板作成数の制限
+  - [ ] コメント部分の差し替えメソッドをhelperに移動したい（DATとViewで使う）
+        NullObjectのような実装にする？(ベンチ取る？)
 - テストを作る
   - [ ] モデル
   - [ ] コントローラー
@@ -85,6 +97,7 @@ The gem is available as open source under the terms of the [MIT License](https:/
   - [ ] ユーザー機能をスコープ(/user)以下にまとめる
     - [ ] ツールバーの React 化
     - [ ] プロキシによるキャッシュを有効にする
+  - [ ] Nextbbs::Comment.columns_hash['sequential_id'].limit から書き込み上限をチェックする機能をつける？
 
 ## 参考
 

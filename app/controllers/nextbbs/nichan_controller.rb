@@ -1,5 +1,5 @@
 require_dependency "nextbbs/application_controller"
-require 'csv'
+require "csv"
 
 module Nextbbs
   class NichanController < ApplicationController
@@ -15,22 +15,31 @@ module Nextbbs
     #   end
     # end
 
+    # /boards/:board_id/
+    def board
+      @board = Board.find(params[:board_id])
+      @topics = @board.topics
+      body = render_to_string "nextbbs/boards/show"
+      render plain: body.encode(Encoding::CP932, invalid: :replace, undef: :replace),
+             content_type: "text/html; charset=Shift_JIS"
+    end
+
     # /boards/:id/SETTING.TXT
     def setting
-      @board  = Board.find(params[:board_id])
+      @board = Board.find(params[:board_id])
       body = <<~"EOS"
-      BBS_TITLE=#{@board.title}
+        BBS_TITLE=#{@board.title}
       EOS
       render plain: body.encode(Encoding::CP932, invalid: :replace, undef: :replace),
-              content_type: 'text/plain; charset=Shift_JIS'
+             content_type: "text/plain; charset=Shift_JIS"
     end
 
     # /boards/:id/subject.txt
     def subject
-      @board  = Board.find(params[:board_id])
+      @board = Board.find(params[:board_id])
       @topics = @board.topics
 
-      generated_dat = CSV.generate(col_sep: "<>", row_sep: "\n", quote_char: '') do | csv |
+      generated_dat = CSV.generate(col_sep: "<>", row_sep: "\n", quote_char: "") do |csv|
         @topics.each do |t|
           # TODO: escapeは？
           csv << ["#{t.id}.dat", "#{t.title} (#{t.comments.count})"]
@@ -38,31 +47,34 @@ module Nextbbs
       end
 
       render plain: generated_dat.encode(Encoding::CP932, invalid: :replace, undef: :replace),
-              content_type: 'text/plain; charset=Shift_JIS'
+             content_type: "text/plain; charset=Shift_JIS"
     end
 
     # /boards/:id/dat/:topic_id.dat
     def dat
       # puts "params: ", params
-      @board  = Board.find(params[:board_id])
-      @topic  = @board.topics.find(params[:topic_id])
+      @board = Board.find(params[:board_id])
+      @topic = @board.topics.find(params[:topic_id])
       @comments = @topic.comments
 
-      generated_dat = CSV.generate(col_sep: "<>", row_sep: "\n ", quote_char: '') do | csv |
+      generated_dat = CSV.generate(col_sep: "<>", row_sep: "\n ", quote_char: "") do |csv|
         @comments.each do |c|
           # csv << [c.name, c.email, c.date, c.body, c.id]
+          date_str = I18n.l(c.created_at, format: "%Y/%m/%d(%a) %H:%M:%S.%2N")
+          hash_str = c.hashid ? " ID:#{c.hashid}" : ""
+          # topic_title = c.no == 1 ? @topic.title : nil
           csv << [
             c.name,
+            c.email,
+            date_str + hash_str,
+            " " + ApplicationController.helpers.newline2br(c.body) + " ",
             nil,
-            I18n.l(c.created_at, format: "%Y/%m/%d(%a) %H:%M:%S.%2N"),
-            ApplicationController.helpers.newline2br(c.body),
-            nil
           ]
         end
       end
 
       render plain: generated_dat.encode(Encoding::CP932, invalid: :replace, undef: :replace),
-              content_type: 'text/plain; charset=Shift_JIS'
+             content_type: "text/plain; charset=Shift_JIS"
     end
 
     # /boards/test/read.cgi/:board_id/:topic_id/
@@ -73,7 +85,7 @@ module Nextbbs
       @comments = @topic.comments
 
       @new_comment = Form::Comment.new(topic: @topic)
-      render 'nextbbs/topics/show'
+      render "nextbbs/topics/show"
     end
 
     # /boards/test/bbs.cgi
@@ -90,8 +102,8 @@ module Nextbbs
       @url = File.join("#{boards_path}", "/test/read.cgi/#{@board.id}/#{@topic.id}/")
 
       body = <<~"EOS"
-      <html>
-      <!-- 2ch_X:#{ @write_result } -->
+                                                                                                                        <html>
+                                                                                                                        <!-- 2ch_X:#{@write_result} -->
       <head>
         <title>nextbbs-bbs.cgi</title>
         <meta http-equive="refresh" content="#{@time_count}; URL=#{@url}">
@@ -101,7 +113,7 @@ module Nextbbs
       </body>
       EOS
       render plain: body.encode(Encoding::CP932, invalid: :replace, undef: :replace),
-              content_type: 'text/html; charset=Shift_JIS'
+             content_type: "text/html; charset=Shift_JIS"
     end
 
     private
@@ -111,13 +123,12 @@ module Nextbbs
     end
 
     def useragent_2ch?
-      ua = request.env['HTTP_USER_AGENT']
+      ua = request.env["HTTP_USER_AGENT"]
       if ua.include? "JaneStyle"
         true
       else
         false
       end
     end
-
   end
 end

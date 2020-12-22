@@ -66,7 +66,9 @@ module Nextbbs
 
         if @comment.save
           # redirect_to @comment, notice: 'Comment was successfully created.'
-          redirect_to [@topic.board, @topic], notice: "Comment was successfully created."
+          # redirect_to [@topic.board, @topic], notice: "Comment was successfully created."
+          redirect_to board_topic_path(@topic.board, @topic, anchor: helpers.comment_anchor(@comment)),
+                      notice: "Comment was successfully created."
         else
           redirect_to root_url
         end
@@ -87,7 +89,7 @@ module Nextbbs
       # @comment.destroy
       case @comment.status
       when "published"
-        @comment.status = :deleted
+        @comment.status = :removed
       end
 
       if @comment.save

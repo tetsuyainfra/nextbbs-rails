@@ -4,22 +4,20 @@ title Board Model's status
 
 
 
-state Normal{
+state Manageable {
   Public   : 公開中
   Unpublic : 未公開
 }
 
-state Abnormal{
-  Ban    : Admin banned board.
-  Delete : User deleted board by self.
+state Unmanaged {
+  Removed : Owner/Admin deleted board
 }
 
-[*]      -down-> Unpublic : [S]掲示板の作成
+[*]      -down-> Unpublic : [O]掲示板の作成
 Unpublic -down-> Public : [O]
 Public   -up-> Unpublic : [O]
 
-Normal --> Ban : [A]
-Normal --> Delete : [O]
+Manageable --> Removed : [O/A]
 
 legend
 - S : System

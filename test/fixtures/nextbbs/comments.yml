@@ -102,7 +102,7 @@ three_3:
   sequential_id: 3
   name: MyString2
   body: MyText
-  status: <%= Nextbbs::Comment.statuses[:unpublished] %>
+  status: <%= Nextbbs::Comment.statuses[:published] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
                   Faker::Internet.domain_name(subdomain: true) %>
@@ -111,7 +111,7 @@ three_4:
   sequential_id: 4
   name: MyString2
   body: MyText
-  status: <%= Nextbbs::Comment.statuses[:pending] %>
+  status: <%= Nextbbs::Comment.statuses[:removed] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
                   Faker::Internet.domain_name(subdomain: true) %>
@@ -120,7 +120,18 @@ three_5:
   sequential_id: 5
   name: MyString2
   body: MyText
-  status: <%= Nextbbs::Comment.statuses[:deleted] %>
+  status: <%= Nextbbs::Comment.statuses[:removed] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." +
+                  Faker::Internet.domain_name(subdomain: true) %>
+three_6:
+  topic: three
+  sequential_id: 6
+  name: "Tag Escaped?"
+  body: |
+    <h3>h3</h3>
+    <pre>pre</pre>
+  status: <%= Nextbbs::Comment.statuses[:published] %>
   ip: <%= Faker::Internet.ip_v4_address %>
   hostname: <%= Faker::Internet.username + "." +
                   Faker::Internet.domain_name(subdomain: true) %>
@@ -136,6 +147,17 @@ comment_1_<%= i %>:
   hostname: <%= Faker::Internet.username + "." + Faker::Internet.domain_name(subdomain: true) %>
 <% end %>
 
+
+<% (1..999).each do |i| %>
+comment_999_<%= i %>:
+  topic: topic_999
+  sequential_id: <%= i %>
+  name: Name774
+  body: <%= i %>コメ
+  status: <%= Nextbbs::Comment.statuses[:published] %>
+  ip: <%= Faker::Internet.ip_v4_address %>
+  hostname: <%= Faker::Internet.username + "." + Faker::Internet.domain_name(subdomain: true) %>
+<% end %>
 
 <% if false %>
 # <% 10.times.each do |ti| %>

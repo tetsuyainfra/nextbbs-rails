@@ -1,21 +1,34 @@
 module Nextbbs
   class Comment < ApplicationRecord
-    belongs_to :topic
-    acts_as_sequenced scope: :topic_id
+    include AASM
 
+    belongs_to :topic
+    belongs_to :owner, class_name: Nextbbs.config.owner_model, optional: true
+
+    acts_as_sequenced scope: :topic_id
     alias_attribute :no, :sequential_id
+
+    enum status: {
+      removed: -1,    # 削除済み(削除理由は別途保存する？)
+      # unpublished: 0, # 表示を取り下げ
+      published: 1,   # 表示
+    }
+
+    aasm column: :status, enum: true do
+      state :published, initial: true
+      state :removed
+
+      event :remove, guards: :user_is_owner? do
+        transitions from: :published, to: :removed
+      end
+    end
+
+    def user_is_owner?(user)
+      owner == user
+    end
 
     counter_culture [:topic, :board]
     counter_culture :topic
-
-    enum status: {
-      deleted: -1,    # 削除済み(削除理由は別途保存)
-      unpublished: 0, # 表示を取り下げ # TODO: いらなくない？
-      published: 1,   # 表示
-      pending: 2,     # オーナーの承認待ち
-    }
-
-    belongs_to :owner, class_name: Nextbbs.config.owner_model, optional: true
 
     before_create :calc_hashid
     # MEMO: コメント書き換え機能がつくと変更の必要あり
