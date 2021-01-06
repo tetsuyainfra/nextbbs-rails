@@ -8,7 +8,7 @@ module Nextbbs
 
     def self.useragent_2ch?(request)
       ua = request.env["HTTP_USER_AGENT"]
-      if ua.include? "JaneStyle"
+      if ua.present? && ua.include?("JaneStyle")
         true
       else
         false

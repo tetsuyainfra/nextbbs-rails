@@ -1,5 +1,4 @@
-
-require 'test_helper'
+require "test_helper"
 
 module Nextbbs
   class RoutingTest < ActionDispatch::IntegrationTest
@@ -12,19 +11,25 @@ module Nextbbs
       # assert_generatesの逆方向のテスト
       # 渡されたパスのルーティングが正しく扱われ、(expected_optionsハッシュで渡された) 解析オプションがパスと一致したことを主張する。
       # {controller: ...} が expected_options相当
-      assert_recognizes({ controller: 'nextbbs/boards', action: 'show', id: '1' }, '/nextbbs/boards/1')
+      assert_recognizes({
+        controller: "nextbbs/boards", action: "show", id: "1",
+        trailing_slash: true,
+      }, "/nextbbs/boards/1")
 
       # *_generates, _recognizesの両方からチェックする
       # assert_routing({ path: 'photos', method: :post }, { controller: 'photos', action: 'create' })
     end
 
     test "Topics resource" do
-      assert_recognizes({ controller: 'nextbbs/topics', action: 'show', board_id: '2', id: '22' }, '/nextbbs/boards/2/topics/22')
+      assert_recognizes({
+        controller: "nextbbs/topics", action: "show", board_id: "2", id: "22",
+        trailing_slash: true,
+      }, "/nextbbs/boards/2/topics/22")
     end
 
     test "Comments resource" do
-      assert_recognizes({ controller: 'nextbbs/comments', action: 'show', id: '3' }, '/nextbbs/comments/3')
+      assert_recognizes({ controller: "nextbbs/comments", action: "show", id: "3" },
+                        "/nextbbs/comments/3")
     end
-
   end
 end

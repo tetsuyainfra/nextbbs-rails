@@ -18,7 +18,7 @@
 
 one:
   id: 1234
-  name: one
+  name: one1
   title: OneBoard
   description: This is OneBoard
   status: <%= Nextbbs::Board.statuses[:published] %>
@@ -27,7 +27,7 @@ one:
 
 two:
   id: 1235
-  name: two
+  name: two2
   title: TwoBoard(日本語テスト)
   description: |
     This is TwoBoard
