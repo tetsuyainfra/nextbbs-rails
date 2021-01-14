@@ -1,7 +1,8 @@
 # NOTE: only doing this in development as some production environments (Heroku)
 # NOTE: are sensitive to local FS writes, and besides -- it's just not proper
 # NOTE: to have a dev-mode tool do its thing in production.
-if Rails.env.development?
+# nextbbs-rails/にて開発するときのみ有効化
+if Rails.application.class.module_parent_name == "Dummy" && Rails.env.development?
   require 'annotate'
   task :set_annotation_options do
     # You can override any of these by setting an environment variable of the
